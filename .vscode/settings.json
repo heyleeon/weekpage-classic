@@ -1,0 +1,47 @@
+{
+  // ── 资源管理器隐藏：系统垃圾文件 + 各类缓存（眼不见为净）──
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/desktop.ini": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/.mypy_cache": true,
+    "**/*.egg-info": true,
+    "**/.vite": true,
+    "**/*.tsbuildinfo": true,
+    "**/target": true
+  },
+
+  // ── 全局搜索排除：无关的大目录 / 锁文件 / 产物（提速 + 减噪）──
+  "search.exclude": {
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/frontend/dist": true,
+    "**/logs": true,
+    "**/data": true,
+    "**/uv.lock": true,
+    "**/pnpm-lock.yaml": true,
+    "**/*.sqlite3": true,
+    "**/target": true
+  },
+
+  // ── 文件监听排除：降低 CPU / 内存占用 ──
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/node_modules/**": true,
+    "**/logs/**": true,
+    "**/data/**": true,
+    "**/target/**": true
+  },
+
+  // ── WeekPage：Rust 用 clippy 做保存时检查；TS / CSS 统一交给 Biome 格式化 ──
+  "rust-analyzer.check.command": "clippy",
+  "rust-analyzer.linkedProjects": ["backend/Cargo.toml"],
+  "[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[css]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[json]": { "editor.defaultFormatter": "biomejs.biome" }
+}

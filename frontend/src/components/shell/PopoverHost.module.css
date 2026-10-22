@@ -1,0 +1,11 @@
+.anchor {
+  position: fixed;
+  z-index: 150;
+}
+
+/* Invisible while measured, but still focusable: content focuses its first field on mount
+   (§11.5 / §11.6), and focus() on a visibility:hidden element is ignored. */
+.measuring {
+  opacity: 0;
+  pointer-events: none;
+}

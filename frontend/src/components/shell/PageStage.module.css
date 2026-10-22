@@ -1,0 +1,37 @@
+/* Page area (ui-spec §1.3「左右滑动换页」): the slots share one grid cell, so a page mounting
+   never moves another. usePageSwipe writes the transforms inline: none on the live page at rest
+   (fixed drag overlays inside stay put), a span to the right for a parked page.
+   overflow-x: clip, not hidden: a parked page never makes anything scrollable sideways. */
+.stage {
+  position: relative;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+  overflow-x: clip;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  grid-area: 1 / 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.stage[data-moving] > .slot {
+  will-change: transform;
+}
+
+/* While the pages move it takes clicks, hovers and the wheel (the stage's listener still sees
+   the wheel). Toggling one empty box restyles nothing inside the pages. */
+.shield {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: none;
+}
+
+.stage[data-moving] > .shield {
+  display: block;
+}

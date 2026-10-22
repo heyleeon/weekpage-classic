@@ -1,0 +1,181 @@
+/* WeekPage 设计系统 · 第 1 层 · 原始值
+
+   只有这一层出现真实的 hex / px / rem。上层（semantic / themes / components）一律引用这里，
+   绝不再写裸值。换品牌色 = 只动本文件。
+
+   颜色取自《视觉规范 V3》白天 V3-A 与黑夜 V3-C 两套的全部取值，
+   按值命名：--p-<色系>-<rrggbb>[-a<不透明度%>]，white / black 不带色值。
+   「颜色字面量只在本文件」本仓由 scripts/check-tokens.sh 守，桌面端由 scripts/check-boundaries.sh 守。 */
+:root {
+  /* ── 调色板 ── */
+  /* white */
+  --p-white: #ffffff;
+  --p-white-a00: #ffffff00;
+  --p-white-a02: #ffffff05;
+  --p-white-a03: #ffffff08;
+  --p-white-a06: #ffffff0f;
+  --p-white-a07: #ffffff12;
+  --p-white-a08: #ffffff14;
+  --p-white-a09: #ffffff17;
+  --p-white-a10: #ffffff1a;
+  --p-white-a12: #ffffff1f;
+  --p-white-a14: #ffffff24;
+  --p-white-a15: #ffffff26;
+  --p-white-a16: #ffffff29;
+  --p-white-a66: #ffffffa8;
+
+  /* black */
+  --p-black-a03: #00000008;
+  --p-black-a06: #0000000f;
+  --p-black-a08: #00000014;
+  --p-black-a10: #0000001a;
+  --p-black-a12: #0000001f;
+  --p-black-a13: #00000022;
+  --p-black-a20: #00000033;
+  --p-black-a25: #00000040;
+  --p-black-a27: #00000044;
+  --p-black-a30: #0000004d;
+  --p-black-a40: #00000066;
+  --p-black-a45: #00000073;
+  --p-black-a60: #00000099;
+  --p-black-a70: #000000b3;
+
+  /* gray */
+  --p-gray-060609-a65: #060609a6;
+  --p-gray-0e0e10: #0e0e10;
+  --p-gray-1c1c1e: #1c1c1e;
+  --p-gray-1c1c1e-a24: #1c1c1e3d;
+  --p-gray-232325: #232325;
+  --p-gray-232325-a00: #23232500;
+  --p-gray-2c2c2e: #2c2c2e;
+  --p-gray-2c2c2e-a00: #2c2c2e00;
+  --p-gray-3c3c43: #3c3c43;
+  --p-gray-636366: #636366;
+  --p-gray-6e6e73: #6e6e73;
+  --p-gray-8e8e93: #8e8e93;
+  --p-gray-98989d: #98989d;
+  --p-gray-aeaeb2: #aeaeb2;
+  --p-gray-c7c7cc: #c7c7cc;
+  --p-gray-d1d1d6: #d1d1d6;
+  --p-gray-e5e5ea: #e5e5ea;
+  --p-gray-ececf0: #ececf0;
+  --p-gray-eeeef0: #eeeef0;
+  --p-gray-efeff4-a80: #efeff4cc;
+  --p-gray-f2f2f7: #f2f2f7;
+  --p-gray-f5f5f7: #f5f5f7;
+  --p-gray-f6f6f8: #f6f6f8;
+  --p-gray-f7f7fa: #f7f7fa;
+  --p-gray-f7f7fa-a90: #f7f7fae6;
+  --p-gray-f9f9fb: #f9f9fb;
+  --p-gray-fbfbfc: #fbfbfc;
+
+  /* blue */
+  --p-blue-0a7aff: #0a7aff;
+  --p-blue-0a7aff-a08: #0a7aff14;
+  --p-blue-0a7aff-a14: #0a7aff24;
+  --p-blue-0a84ff: #0a84ff;
+  --p-blue-0a84ff-a08: #0a84ff14;
+  --p-blue-0a84ff-a20: #0a84ff33;
+  --p-blue-409cff: #409cff;
+
+  /* orange */
+  --p-orange-bb6d00: #bb6d00;
+  --p-orange-f08c00: #f08c00;
+  --p-orange-ff9f0a: #ff9f0a;
+  --p-orange-ff9f0a-a16: #ff9f0a29;
+  --p-orange-ffb84d: #ffb84d;
+
+  /* green */
+  --p-green-0e7f5f: #0e7f5f;
+  --p-green-12a37a: #12a37a;
+  --p-green-12a37a-a40: #12a37a66;
+  --p-green-30d158: #30d158;
+  --p-green-30d158-a17: #30d1582b;
+  --p-green-30d158-a40: #30d15866;
+  --p-green-6ee08c: #6ee08c;
+  --p-green-e0f3ee: #e0f3ee;
+
+  /* red */
+  --p-red-bb253e: #bb253e;
+  --p-red-f0304f: #f0304f;
+  --p-red-f0304f-a40: #f0304f66;
+  --p-red-ff453a: #ff453a;
+  --p-red-ff453a-a06: #ff453a0f;
+  --p-red-ff453a-a18: #ff453a2e;
+  --p-red-ff453a-a55: #ff453a8c;
+  --p-red-ff7b72: #ff7b72;
+
+  /* tint */
+  --p-tint-fde4e8: #fde4e8;
+  --p-tint-fdf0de: #fdf0de;
+
+  /* wall */
+  --p-wall-1: #7fa8f5;
+  --p-wall-2: #b8a4f0;
+  --p-wall-3: #f3a6c8;
+  --p-wall-4: #ffd3a5;
+  --p-wall-5: #9adcc5;
+
+  /* ── 预览模式模拟壁纸（只在浏览器预览里用；产品里窗口外圈是真毛玻璃）── */
+  --p-wallpaper: linear-gradient(
+    135deg,
+    var(--p-wall-1) 0%,
+    var(--p-wall-2) 30%,
+    var(--p-wall-3) 55%,
+    var(--p-wall-4) 78%,
+    var(--p-wall-5) 100%
+  );
+
+  /* ── 字号阶 ── */
+  --p-font-10: 10px;
+  --p-font-11: 11px;
+  --p-font-12: 12px;
+  --p-font-12-5: 12.5px;
+  --p-font-13: 13px;
+  --p-font-14: 14px;
+  --p-font-14-5: 14.5px;
+  --p-font-15: 15px;
+  --p-font-20: 20px;
+  --p-font-22: 22px;
+  --p-font-26: 26px;
+
+  /* ── 字重 ── */
+  --p-weight-400: 400;
+  --p-weight-500: 500;
+  --p-weight-600: 600;
+  --p-weight-700: 700;
+
+  /* ── 圆角阶 ── */
+  --p-radius-4-5: 4.5px;
+  --p-radius-6: 6px;
+  --p-radius-8: 8px;
+  --p-radius-10: 10px;
+  --p-radius-14: 14px;
+  --p-radius-16: 16px;
+  --p-radius-18: 18px;
+  --p-radius-22: 22px;
+  --p-radius-26: 26px;
+  --p-radius-99: 99px;
+
+  /* ── 间距阶 ── */
+  --p-space-2: 2px;
+  --p-space-4: 4px;
+  --p-space-6: 6px;
+  --p-space-8: 8px;
+  --p-space-10: 10px;
+  --p-space-12: 12px;
+  --p-space-14: 14px;
+  --p-space-16: 16px;
+  --p-space-18: 18px;
+  --p-space-20: 20px;
+  --p-space-24: 24px;
+  --p-space-26: 26px;
+  --p-space-32: 32px;
+  --p-space-40: 40px;
+
+  /* ── 时长 ── */
+  --p-duration-120: 120ms;
+  --p-duration-150: 150ms;
+  --p-duration-180: 180ms;
+  --p-duration-200: 200ms;
+}

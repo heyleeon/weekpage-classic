@@ -1,0 +1,29 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: none;
+  height: var(--chip-h);
+  padding: 0 var(--space-8);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+button.badge:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.do {
+  background: var(--fill-2);
+  color: var(--text-3);
+}
+
+.wait,
+.check {
+  background: var(--rm-soft);
+  color: var(--rm-text);
+}

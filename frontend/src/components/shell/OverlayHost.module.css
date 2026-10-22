@@ -1,0 +1,74 @@
+/* Overlay layer covers the whole paper (toolbar and today pill included), not the glass ring. */
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  border-radius: var(--paper-radius);
+  overflow: hidden;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: var(--scrim);
+  backdrop-filter: blur(var(--scrim-blur));
+  -webkit-backdrop-filter: blur(var(--scrim-blur));
+  animation: fade var(--duration-fast) var(--ease-out);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.center > * {
+  pointer-events: auto;
+}
+
+/* Closing (§15.1): the entrance backwards in 120ms, then OverlayHost unmounts it. */
+.leaving {
+  pointer-events: none;
+}
+
+.leaving .scrim {
+  animation: fade-out var(--duration-exit) var(--ease-out) forwards;
+}
+
+.leaving .center > * {
+  pointer-events: none;
+  animation: panel-out var(--duration-exit) var(--ease-out) forwards;
+}
+
+/* Already open when the host mounted (language switch re-keys the paper): no entrance replay. */
+.instant:not(.leaving) .scrim,
+.instant:not(.leaving) .center > * {
+  animation: none;
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes panel-out {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

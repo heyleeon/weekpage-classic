@@ -1,0 +1,189 @@
+/* Calendar item (ui-spec §2.5): min-h 18, padding 1px 6px, line-height 16, radius 6;
+   icon box 10 + gap 6 → the title starts 22 from the item's left edge. */
+.item {
+  --ci-bg: transparent;
+  --ci-fg: var(--text);
+  --ci-icon: var(--ev);
+  --ci-time: var(--text-muted);
+  --ci-icon-opacity: 1;
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  gap: var(--space-6);
+  min-height: 18px;
+  padding: 1px var(--space-6);
+  border-radius: var(--radius-sm);
+  background: var(--ci-bg);
+  color: var(--ci-fg);
+  font-size: var(--font-small);
+  line-height: 16px;
+  outline: none;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+}
+
+.reminder,
+.checkpoint {
+  --ci-bg: var(--rm-soft);
+  --ci-fg: var(--rm-text);
+  --ci-icon: var(--rm-text);
+  --ci-time: var(--rm-text);
+  --ci-icon-opacity: 0.6;
+}
+
+.start {
+  --ci-bg: var(--st-soft);
+  --ci-fg: var(--st-text);
+  --ci-icon: var(--st-text);
+  --ci-icon-opacity: 0.6;
+}
+
+.due {
+  --ci-bg: var(--du-soft);
+  --ci-fg: var(--du-text);
+  --ci-icon: var(--du-text);
+  --ci-icon-opacity: 0.6;
+}
+
+/* An overdue checkpoint (ui-spec §9.3): the due colours, so it reads like a missed deadline. */
+.checkpoint.overdue {
+  --ci-bg: var(--du-soft);
+  --ci-fg: var(--du-text);
+  --ci-icon: var(--du-text);
+  --ci-icon-opacity: 1;
+}
+
+/* Hover: events get --fill-2; coloured items get a slightly deeper tint (lighter in dark). */
+.event:hover {
+  background: var(--fill-2);
+}
+
+.reminder:hover,
+.checkpoint:hover,
+.start:hover,
+.due:hover {
+  background: color-mix(in srgb, var(--ci-bg), var(--text) 4%);
+}
+
+/* Dark: V3-C paints the icons in the full accent colour (ui-spec §2.5 note: tune visually). */
+:global(:root[data-theme="dark"]) .item:not(.event) {
+  --ci-icon-opacity: 1;
+}
+
+:global(:root[data-theme="dark"]) .reminder,
+:global(:root[data-theme="dark"]) .checkpoint {
+  --ci-icon: var(--rm);
+}
+
+:global(:root[data-theme="dark"]) .checkpoint.overdue {
+  --ci-icon: var(--du);
+}
+
+:global(:root[data-theme="dark"]) .start {
+  --ci-icon: var(--st);
+}
+
+:global(:root[data-theme="dark"]) .due {
+  --ci-icon: var(--du);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .item:not(.event) {
+    --ci-icon-opacity: 1;
+  }
+
+  :global(:root:not([data-theme="light"])) .reminder,
+  :global(:root:not([data-theme="light"])) .checkpoint {
+    --ci-icon: var(--rm);
+  }
+
+  :global(:root:not([data-theme="light"])) .checkpoint.overdue {
+    --ci-icon: var(--du);
+  }
+
+  :global(:root:not([data-theme="light"])) .start {
+    --ci-icon: var(--st);
+  }
+
+  :global(:root:not([data-theme="light"])) .due {
+    --ci-icon: var(--du);
+  }
+}
+
+.icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 16px;
+  color: var(--ci-icon);
+  opacity: var(--ci-icon-opacity);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.time {
+  flex: none;
+  align-self: flex-start;
+  color: var(--ci-time);
+  font-size: var(--font-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+.faded {
+  opacity: 0.45;
+}
+
+.done .title {
+  text-decoration: line-through;
+}
+
+.selected {
+  box-shadow: inset 0 0 0 1px var(--ev);
+}
+
+.item:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--ev);
+}
+
+/* Just created: 1px --ev ring + --event-glow, fading out after ≈1.5 s. */
+.fresh {
+  animation: fresh 2s var(--ease-out) forwards;
+}
+
+@keyframes fresh {
+  0%,
+  70% {
+    box-shadow:
+      0 0 0 1px var(--ev),
+      0 0 0 4px var(--event-glow);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 transparent,
+      0 0 0 0 transparent;
+  }
+}
+
+/* Drag (ui-spec §2.7): grab → grabbing (the grabbing cursor is set on <html> while held). */
+.draggable {
+  cursor: grab;
+}
+
+.ghost {
+  opacity: 0.35;
+}
+
+.lifted {
+  background: var(--elevated);
+  box-shadow: var(--shadow-pop);
+  transform: rotate(-2deg);
+  cursor: grabbing;
+}

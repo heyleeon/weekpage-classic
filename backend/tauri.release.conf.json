@@ -1,0 +1,12 @@
+{
+  "identifier": "app.weekpage",
+  "productName": "WeekPage",
+  "bundle": {
+    "macOS": {
+      "files": {
+        "Resources/zh-Hans.lproj/InfoPlist.strings": "./macos/zh-Hans.lproj/InfoPlist.strings",
+        "Resources/en.lproj/InfoPlist.strings": "./macos/en.lproj/InfoPlist.strings"
+      }
+    }
+  }
+}

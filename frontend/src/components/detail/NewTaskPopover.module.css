@@ -1,0 +1,158 @@
+/* 「变成任务」/「新建任务」 (ui-spec §11.2). Groups breathe apart, things that belong together sit
+   close: title · dates (chips over the calendar, one tinted block like the detail's time block)
+   · steps · buttons. Chips, bell and composer come from TaskDetail.module.css. */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  font-variant-numeric: tabular-nums;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* Reads like the detail title; the rounded ring shows only while typing. */
+.titleInput {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  margin-left: calc(var(--space-8) * -1);
+  padding: 0 var(--space-8);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--font-modal-title);
+  font-weight: var(--weight-bold);
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+}
+
+.titleInput:focus {
+  border-color: var(--ev);
+  background: var(--elevated);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+.titleInput::placeholder {
+  color: var(--text-faint);
+  font-weight: var(--weight-semibold);
+}
+
+.dates {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-12);
+  border-radius: var(--radius-md);
+  background: var(--fill-3);
+}
+
+.chipRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.calIcon {
+  flex: none;
+  margin-right: var(--space-2);
+  color: var(--text-muted);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.kpList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0 var(--space-4);
+  list-style: none;
+}
+
+.kpRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  height: 28px;
+  animation: kpIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes kpIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.kpText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: var(--font-body);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kpDate {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+}
+
+.kpRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0;
+}
+
+.kpRow:hover .kpRemove,
+.kpRemove:focus-visible {
+  opacity: 1;
+}
+
+.kpRemove:hover {
+  background: var(--fill-2);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kpRow {
+    animation: none;
+  }
+}
+
+/* The composer's own top margin is for the detail panel; here the group gap spaces it. */
+.steps > :last-child {
+  margin-top: 0;
+}

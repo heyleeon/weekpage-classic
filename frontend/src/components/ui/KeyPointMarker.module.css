@@ -1,0 +1,109 @@
+.marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--ring);
+  background: transparent;
+  line-height: 0;
+}
+
+button.marker:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+/* Clickable (tick / untick): a hit area 5px bigger all round and a green halo on hover, so the
+   circle reads as a button. */
+button.marker {
+  position: relative;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+button.marker::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+}
+
+button.marker:hover {
+  border-color: var(--st);
+  box-shadow: 0 0 0 3px var(--st-soft);
+}
+
+.done {
+  border-color: var(--st);
+  background: var(--st);
+  color: var(--check-glyph);
+}
+
+/* Phosphor's Check sits 4/256 right and 8/256 low in its box; pull it back to the circle's centre. */
+.done svg {
+  transform: translate(-1.5625%, -3.125%);
+}
+
+/* Overdue (ui-spec §9.3): a dated step past its date, not ticked — the red of 逾期 with a 「!」. */
+.overdue {
+  border-color: var(--du);
+  background: var(--du-soft);
+  color: var(--du);
+}
+
+.wait,
+.check,
+.noteThem {
+  border-color: var(--rm);
+  color: var(--rm);
+}
+
+/* Hover: the bell rings (swings from its top), the hourglass turns over (it looks the same upside
+   down, so nothing jumps when the animation ends). Once per hover. */
+@media (prefers-reduced-motion: no-preference) {
+  .check:hover svg {
+    transform-origin: 50% 10%;
+    animation: ring 0.7s ease-in-out;
+  }
+
+  .wait:hover svg {
+    animation: turn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes ring {
+  from,
+  to {
+    transform: rotate(0);
+  }
+  15% {
+    transform: rotate(18deg);
+  }
+  35% {
+    transform: rotate(-14deg);
+  }
+  55% {
+    transform: rotate(9deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes turn {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+.idle,
+.noteMe {
+  border-color: var(--ring);
+  color: var(--text-3);
+}

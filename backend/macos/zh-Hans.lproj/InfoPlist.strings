@@ -1,0 +1,5 @@
+/* App name shown by Finder, Launchpad, Spotlight, notifications and System Settings when the OS
+   language is Chinese. Bundled by tauri.release.conf.json (bundle.macOS.files); Info.plist sets
+   LSHasLocalizedDisplayName. Keep in step with i18n.rs Text::AppName and common.appName. */
+"CFBundleDisplayName" = "WeekPage";
+"CFBundleName" = "WeekPage";

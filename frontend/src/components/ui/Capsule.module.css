@@ -1,0 +1,83 @@
+.capsule {
+  composes: glass from "./Glass.module.css";
+  min-width: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  height: var(--capsule-h);
+  padding: var(--capsule-pad);
+  border-radius: var(--radius-pill);
+  /* A tinted track under the glass, so the selected white chip stands out from it. */
+  background: var(--segment-track);
+}
+
+.sm {
+  height: var(--capsule-h-sm);
+}
+
+.segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 var(--capsule-seg-pad-x);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-2);
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.sm .segment {
+  font-size: var(--font-small);
+}
+
+.segment:hover:not(.selected):not(:disabled) {
+  background: var(--fill-2);
+  color: var(--text);
+}
+
+.segment:active:not(:disabled) {
+  opacity: 0.7;
+}
+
+.segment:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.segment:disabled {
+  color: var(--text-disabled);
+}
+
+.selected {
+  background: var(--capsule-on);
+  box-shadow: var(--segment-on-shadow);
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.round {
+  width: var(--capsule-nav-btn);
+  padding: 0;
+}
+
+.hint {
+  margin-left: var(--space-6);
+  color: var(--text-faint);
+  font-size: var(--font-shortcut);
+  font-weight: var(--weight-regular);
+}
+
+.count {
+  margin-left: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+}

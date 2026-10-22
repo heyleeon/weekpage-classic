@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true, "root": ".." },
+  "files": {
+    "includes": [
+      "**",
+      "!dist",
+      "!src/types/bindings.ts",
+      "!src/lib/__fixtures__",
+      "!src/lib/holidays-data",
+      "!src/design/tokens/primitive.css",
+      "!src/design/tokens/semantic.css",
+      "!src/design/themes/dark.css"
+    ]
+  },
+  "formatter": { "indentStyle": "space", "lineWidth": 100 },
+  "linter": { "rules": { "preset": "recommended" } },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } }
+}

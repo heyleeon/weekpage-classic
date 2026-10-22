@@ -1,0 +1,73 @@
+/* Calendar page (ui-spec §2.1): 12 from the paper's sides; rows share (available − 64) evenly;
+   a 1px --line between rows; no vertical lines, no fills.
+   Week scrolling: .grid (rows + the 64px gap) takes wheel / grab and clips; .viewport is the box
+   of the N visible rows (row height and drop hit tests are measured on it); .track holds N + 2
+   rows (a buffer week above and below), lifted one row; useWeekScroll paints the lift + the slide
+   offset as an inline transform (px-snapped).
+   Liquid glass: .grid reaches up under the weekday row, so sliding weeks pass beneath it, and the
+   lower buffer week shows, faded, in the 64px gap behind the glass today pill. */
+.page {
+  --cal-head: 26px;
+  --cal-pill-space: 64px;
+
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 5px var(--space-12) 0;
+}
+
+.grid {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin-top: calc(-1 * var(--cal-head));
+  overflow: hidden;
+}
+
+/* The next week fades into the paper behind the today pill. */
+.grid::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--cal-pill-space);
+  background: linear-gradient(transparent, var(--paper));
+  pointer-events: none;
+}
+
+/* 1px up: the first row's top line lands on the weekday row's bottom line. */
+.viewport {
+  position: absolute;
+  inset: calc(var(--cal-head) - 1px) 0 var(--cal-pill-space);
+}
+
+.track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-rows: repeat(var(--rows, 5), minmax(0, 1fr));
+  height: calc(100% / var(--weeks, 3) * var(--rows, 5));
+  transform: translate3d(0, calc(-100% / var(--rows, 5)), 0);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  min-height: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* The held item (overlay) never takes pointer hits from the grid underneath. */
+.overlay {
+  pointer-events: none;
+}
+
+/* Rows grabbed or an item held: grabbing everywhere until release (html + attribute outranks the
+   single-class cursors of the calendar). */
+:global(html[data-cal-cursor="grabbing"]),
+:global(html[data-cal-cursor="grabbing"] *) {
+  cursor: grabbing;
+}

@@ -1,0 +1,23 @@
+.wrap {
+  display: inline-flex;
+}
+
+.panel {
+  position: fixed;
+  z-index: 160;
+  display: block;
+}
+
+.measuring {
+  visibility: hidden;
+}
+
+/* Calendar card used inside a floating panel. */
+.card {
+  width: 280px;
+  padding: var(--space-12);
+  border: var(--modal-stroke);
+  border-radius: var(--radius-md);
+  background: var(--elevated);
+  box-shadow: var(--modal-shadow);
+}

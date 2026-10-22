@@ -1,0 +1,17 @@
+/* Top edge of a list that scrolls under a floating header: what scrolls out fades into the paper
+   instead of being cut. The scroller sets --edge-space (its top padding, the header's room) and
+   --edge-bleed (its side padding). The negative margins lift the edge into that padding, so at
+   rest nothing is under it; sticky offsets count from inside the padding, hence the negative top. */
+.edge {
+  --edge-h: 14px;
+
+  position: sticky;
+  top: calc(-1 * var(--edge-space));
+  z-index: 1;
+  flex: none;
+  height: var(--edge-h);
+  margin: calc(-1 * var(--edge-space)) calc(-1 * var(--edge-bleed, 0px))
+    calc(var(--edge-space) - var(--edge-h));
+  background: linear-gradient(var(--paper), transparent);
+  pointer-events: none;
+}

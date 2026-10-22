@@ -1,0 +1,31 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text-3);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.button:active:not(:disabled) {
+  opacity: 0.7;
+}
+
+.fill2 {
+  background: var(--fill-2);
+}
+
+.plain {
+  background: transparent;
+}
+
+.plain:hover:not(:disabled) {
+  background: var(--fill-2);
+}

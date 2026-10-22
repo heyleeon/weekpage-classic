@@ -1,0 +1,83 @@
+/* Today pill (ui-spec §3): 16 above the paper bottom, centred, h 38, padding 0 18, glass --pill,
+   separators 1×14 --line with ≈14 on each side. */
+.pill {
+  composes: glass from "../ui/Glass.module.css";
+  position: absolute;
+  bottom: var(--space-16);
+  left: 50%;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glass-shadow-float);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  transform: translateX(-50%);
+  transition: filter var(--duration-fast) var(--ease-out);
+}
+
+.pill:hover {
+  filter: brightness(1.03);
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.item {
+  display: inline-block;
+  line-height: 16px;
+}
+
+.num {
+  margin: 0 1px;
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.du,
+.rm {
+  margin-right: var(--space-4);
+  vertical-align: -1px;
+}
+
+.du {
+  color: var(--du);
+}
+
+.rm {
+  color: var(--rm);
+}
+
+/* Overdue steps (ui-spec §9.3): the whole part in the red of 逾期, number included. */
+.overdue {
+  color: var(--du-text);
+}
+
+.overdue .num {
+  color: var(--du-text);
+}
+
+.sep {
+  flex: none;
+  width: 1px;
+  height: 14px;
+  margin: 0 var(--space-14);
+  background: var(--line);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--ev-text);
+  font-weight: var(--weight-medium);
+}
+
+.pill:hover .link {
+  text-decoration: underline;
+}

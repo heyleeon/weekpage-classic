@@ -1,0 +1,54 @@
+/* Double-click input (ui-spec §2.6): padding 6/8, radius 6, 1px --ev, glow 3px --event-glow,
+   preview line inside the frame (V3-A). One line of text → ≈48 high. */
+.box {
+  flex: none;
+  padding: var(--space-6) var(--space-8);
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+.raw {
+  display: block;
+  width: 100%;
+  min-height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  caret-color: var(--ev);
+  font-size: var(--font-small);
+  line-height: 16px;
+  resize: none;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.preview {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  line-height: 14px;
+  overflow-wrap: anywhere;
+}
+
+.arrow {
+  color: var(--text-faint);
+}
+
+.time {
+  color: var(--ev-text);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  color: var(--text-muted);
+}
+
+.faint {
+  color: var(--text-faint);
+}

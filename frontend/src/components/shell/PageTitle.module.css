@@ -1,0 +1,19 @@
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  margin: 0;
+  font-size: var(--font-page-title);
+  line-height: var(--toolbar-h);
+  white-space: nowrap;
+}
+
+.main {
+  color: var(--text);
+  font-weight: var(--weight-bold);
+}
+
+.sub {
+  color: var(--text-muted);
+  font-weight: var(--weight-regular);
+}

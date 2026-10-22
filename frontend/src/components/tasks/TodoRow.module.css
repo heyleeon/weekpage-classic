@@ -1,0 +1,154 @@
+/* Todo row (ui-spec §5.4): single line 32, +20 per extra line; checkbox x+6, title x+31
+   relative to the left column content edge. The row is the drag item (§5.6) and slides on a
+   SwipeRow (§10.14) over the paper (--swipe-surface, set on the left column). */
+.item {
+  position: relative;
+  border-radius: var(--radius-row);
+}
+
+.swipe {
+  border-radius: var(--radius-row);
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  min-height: 32px;
+  padding: 6px;
+  /* SwipeRow does not clip at rest: the surface passes the row radius on to the tints here. */
+  border-radius: inherit;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.row:hover,
+.active {
+  background: var(--fill-3);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 20px;
+  margin-right: 9px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  color: var(--text);
+  font-size: var(--font-body);
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.titleDone {
+  color: var(--text-disabled);
+}
+
+.tagSlot {
+  display: inline-flex;
+  flex: none;
+  margin-left: var(--space-8);
+}
+
+.tag {
+  gap: 3px;
+  padding: 0 6px;
+}
+
+.remindBtn {
+  display: none;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+  height: var(--chip-h);
+  margin-left: var(--space-8);
+  padding: 0 6px;
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-sm);
+  background: var(--control);
+  color: var(--rm-text);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.remindBtn svg {
+  color: var(--rm);
+}
+
+.row:hover .remindBtn,
+.remindBtnOn,
+.remindBtn:focus-visible {
+  display: inline-flex;
+}
+
+.remindBtn:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.editor {
+  flex: 1;
+  min-width: 0;
+  height: 20px;
+  margin: 0 var(--space-4) 0 -4px;
+  padding: 0 4px;
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-sm);
+  outline: none;
+  background: var(--fill-3);
+  color: var(--text);
+  font-size: var(--font-body);
+}
+
+.done .title {
+  color: var(--text-disabled);
+}
+
+.fresh {
+  background: var(--ev-soft);
+  transition: background 400ms var(--ease-out);
+}
+
+.freshFading {
+  background: transparent;
+}
+
+/* Drag (ui-spec §5.6): the floating copy carries its own card colour, no hover tint. */
+.overlay {
+  --swipe-surface: transparent;
+  border-radius: 10px;
+  background: linear-gradient(var(--card), var(--card)), var(--paper);
+  box-shadow: var(--shadow-pop);
+  transform: translateX(18px) rotate(1deg);
+  cursor: grabbing;
+}
+
+.overlay .row {
+  background: transparent;
+}
+
+.placeholder {
+  background: var(--fill-2);
+}
+
+.placeholder > :not(.dot) {
+  visibility: hidden;
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 50%;
+  background: var(--ev);
+}

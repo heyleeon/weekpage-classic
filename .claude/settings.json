@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [],
+    "_comment": "项目级会覆盖/叠加全局：通常在这里补充项目特有的 deny/ask 规则。"
+  },
+  "hooks": {
+    "_comment": "SessionStart 自动修复 .claude/.agents 软链接镜像（漂移时静默 heal，不阻塞会话）。校验由 GitHub CI 负责。",
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/sync-agent-config.sh --heal >/dev/null 2>&1 || true"
+          }
+        ]
+      }
+    ]
+  }
+}

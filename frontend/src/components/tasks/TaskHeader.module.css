@@ -1,0 +1,94 @@
+/* TaskHeader (ui-spec §4.4): h 28. Floats over the grid so cards scroll under it; only the button
+   (and the title's glass while it shows) takes the pointer, so a wheel or click on the rest of
+   the row reaches the grid below. */
+.header {
+  position: absolute;
+  top: 0;
+  right: var(--space-20);
+  left: var(--space-20);
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex: none;
+  height: 28px;
+}
+
+.titleGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 100%;
+}
+
+/* The title's glass pill, only while cards are under it. Positioned, so the texts after it are
+   positioned too to paint on top. */
+.titleGlass {
+  composes: glass from "../ui/Glass.module.css";
+  position: absolute;
+  inset: 0 calc(-1 * var(--space-14)) 0 calc(-1 * var(--space-12));
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+/* Showing, it is a surface: a click on it must not open the card underneath. */
+.header[data-scrolled] .titleGlass {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.titleGroup > :not(.titleGlass) {
+  position: relative;
+}
+
+.title {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--font-section);
+  font-weight: var(--weight-bold);
+}
+
+.count {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}
+
+.dot {
+  color: var(--text-faint);
+  font-size: var(--font-small);
+}
+
+.overdue {
+  color: var(--du-text);
+  font-size: var(--font-small);
+  font-weight: var(--weight-medium);
+}
+
+.newTask {
+  composes: glass from "../ui/Glass.module.css";
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 28px;
+  margin-left: auto;
+  padding: 0 var(--space-12);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-pill);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.newTask:hover {
+  background: var(--control-on);
+}
+
+.newTask:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}

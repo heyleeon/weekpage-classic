@@ -1,0 +1,76 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-body);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.button:active:not(:disabled) {
+  opacity: 0.7;
+}
+
+.button:disabled {
+  opacity: 0.45;
+}
+
+.sm {
+  height: 28px;
+  padding: 0 var(--space-12);
+  font-size: var(--font-small);
+}
+
+.md {
+  height: 32px;
+  padding: 0 var(--space-16);
+}
+
+.ink {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.accent {
+  background: var(--st);
+  color: var(--on-accent);
+}
+
+.fill2 {
+  background: var(--fill-2);
+  color: var(--text-2);
+  font-weight: var(--weight-regular);
+}
+
+.glass {
+  composes: glass from "./Glass.module.css";
+  border: var(--glass-stroke);
+  color: var(--text-2);
+  font-weight: var(--weight-regular);
+}
+
+.text {
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: var(--weight-regular);
+  padding: 0 var(--space-4);
+}
+
+.text:hover:not(:disabled) {
+  color: var(--text-2);
+}
+
+.danger {
+  color: var(--du-text);
+}

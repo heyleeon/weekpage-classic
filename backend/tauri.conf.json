@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "WeekPage Dev",
+  "mainBinaryName": "weekpage",
+  "identifier": "app.weekpage.dev",
+  "build": {
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../frontend/dist",
+    "beforeDevCommand": { "script": "pnpm dev", "cwd": "../frontend" },
+    "beforeBuildCommand": { "script": "pnpm build", "cwd": "../frontend" }
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "withGlobalTauri": false,
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost https://cdn.jsdelivr.net"
+    },
+    "windows": [
+      {
+        "label": "main",
+        "title": "WeekPage",
+        "width": 1280,
+        "height": 860,
+        "minWidth": 1100,
+        "minHeight": 680,
+        "visible": false,
+        "transparent": true,
+        "decorations": false,
+        "shadow": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": true,
+        "maximizable": false,
+        "center": true,
+        "acceptFirstMouse": true,
+        "dragDropEnabled": false
+      }
+    ]
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg", "nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "macOS": {
+      "signingIdentity": "-",
+      "minimumSystemVersion": "13.0"
+    },
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": ["English", "SimpChinese"],
+        "displayLanguageSelector": false
+      }
+    }
+  }
+}

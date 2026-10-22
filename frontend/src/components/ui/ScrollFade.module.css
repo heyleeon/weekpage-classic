@@ -1,0 +1,85 @@
+.wrap {
+  position: relative;
+  min-height: 0;
+}
+
+/* 3px --track thumb (ui-spec §8.6). Only the ::-webkit-scrollbar set: once the standard
+   scrollbar-width / scrollbar-color are present, Chromium and new WebKit ignore it and fall back
+   to an overlay bar that hides at rest. A styled ::-webkit-scrollbar stays drawn.
+   Vertical only: content a few px too wide (rows with negative margins) must not turn into a
+   sideways scroll with a fat horizontal bar (`height` was never styled). */
+.scroller {
+  height: 100%;
+  max-height: inherit;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.scroller::-webkit-scrollbar {
+  width: 3px;
+  height: 0;
+}
+
+.scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-pill);
+  background: var(--track);
+}
+
+/* scrollbar="hover" (ui-spec §2.3 day cells): hidden at rest, the thin bar shows on hover. */
+.hoverBar .scroller::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.hoverBar:hover .scroller::-webkit-scrollbar-thumb {
+  background: var(--track);
+}
+
+.fade {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: var(--fade-size, 16px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.top {
+  top: 0;
+}
+
+.bottom {
+  bottom: 0;
+}
+
+.card .top {
+  background: linear-gradient(var(--fade-card), var(--fade-card-0));
+}
+
+.card .bottom {
+  background: linear-gradient(var(--fade-card-0), var(--fade-card));
+}
+
+.elevated .top {
+  background: linear-gradient(var(--fade-elevated), var(--fade-elevated-0));
+}
+
+.elevated .bottom {
+  background: linear-gradient(var(--fade-elevated-0), var(--fade-elevated));
+}
+
+.paper .top {
+  background: linear-gradient(var(--paper), transparent);
+}
+
+.paper .bottom {
+  background: linear-gradient(transparent, var(--paper));
+}
+
+.show {
+  opacity: 1;
+}

@@ -1,0 +1,210 @@
+/* Settings panel (ui-spec §16.2), shortcut recorder and first-run hint (§1.1). Tokens only. */
+
+.section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sectionTitle {
+  margin: var(--space-18) 0 var(--space-8);
+  padding: 0;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  background: var(--fill-3);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: 44px;
+  padding: var(--space-8) var(--space-14);
+}
+
+.row + .row {
+  border-top: 1px solid var(--line);
+}
+
+.rowText {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  color: var(--text);
+  font-size: var(--font-body);
+}
+
+.note {
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  line-height: 1.45;
+}
+
+.control {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* A choice row whose note runs under label and capsule together (the capsule leaves too little
+   width for a note beside it). */
+.rowWrap {
+  flex-wrap: wrap;
+  row-gap: var(--space-6);
+  padding-bottom: var(--space-10);
+}
+
+.noteFull {
+  flex-basis: 100%;
+}
+
+/* 「时区」 drop-down: pill like the 「录制」 button, capped so a long zone id never pushes the
+   label off the row. */
+.select {
+  max-width: 220px;
+  height: 28px;
+  padding: 0 var(--space-10);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  text-overflow: ellipsis;
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.statusLine {
+  margin: 0;
+  padding: 0 var(--space-14) var(--space-10);
+  color: var(--du-text);
+  font-size: var(--font-small);
+  line-height: 1.5;
+}
+
+.conflictLine {
+  margin: 0;
+  padding: 0 var(--space-14) var(--space-10);
+  color: var(--rm-text);
+  font-size: var(--font-small);
+  line-height: 1.5;
+}
+
+/* Keycaps: 24 high, min 24 wide, radius 6, --control, --shadow-faint, 12/600 --text-2. */
+.keycaps {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.keycap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-sm);
+  background: var(--control);
+  box-shadow: var(--shadow-faint);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+}
+
+.keycapWaiting {
+  animation: blink 1s ease-in-out infinite;
+  color: var(--text-faint);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* 「录制」 pill 28 high; recording → --ev-soft / --ev-text. */
+.record {
+  height: 28px;
+  padding: 0 var(--space-12);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  white-space: nowrap;
+}
+
+.record:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.recording {
+  background: var(--ev-soft);
+  color: var(--ev-text);
+}
+
+.foot {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-18);
+}
+
+.version {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}
+
+/* First-run hint: a slim strip at the bottom of the paper, shown once. */
+.hint {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-10);
+  margin: 0 var(--space-16) var(--space-10);
+  padding: var(--space-8) var(--space-10) var(--space-8) var(--space-14);
+  border-radius: var(--radius-field);
+  background: var(--fill-3);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  line-height: 1.5;
+}
+
+.hintText {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.hintConflict {
+  color: var(--rm-text);
+}
+
+.hintActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-4);
+}

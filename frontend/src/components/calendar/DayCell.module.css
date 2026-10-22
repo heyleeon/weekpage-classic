@@ -1,0 +1,41 @@
+/* Day cell (ui-spec §2.3): padding top 5 / sides 6; items 2 below the head, gap 2, scroll inside
+   the cell with a bottom fade when they do not fit. */
+.cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 5px var(--space-6) 0;
+  overflow: hidden;
+}
+
+/* The scroller is 3px taller and 4px wider on each side than the items it holds (negative margin
+   + matching padding), so the 3px input glow and the new-item ring (§2.5 / §2.6) are not clipped
+   by its overflow. Items stay 2 below the head and flush with the cell padding. */
+.list {
+  flex: 1;
+  min-height: 0;
+  margin: -1px -4px 0;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 3px 4px var(--space-6);
+}
+
+/* 「放到这里」 (ui-spec §2.7): height of the lifted item, 1px --ev, --ev-soft, 11px --ev-text. Shows
+   in the day the held item would land on (its own day or any other). */
+.placeholder {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 18px;
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-sm);
+  background: var(--ev-soft);
+  color: var(--ev-text);
+  font-size: var(--font-caption);
+}

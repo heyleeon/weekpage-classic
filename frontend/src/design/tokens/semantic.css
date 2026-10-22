@@ -1,0 +1,159 @@
+/* WeekPage 设计系统 · 第 2 层 · 语义（白天 V3-A，也是默认）
+
+   用「意图」命名（surface / text / ev…），值一律引用第 1 层。换皮肤 = 只重映射语义层，组件零改动；
+   黑夜（V3-C）值在 ../themes/dark.css。
+
+   变量名照抄《视觉规范 V3》§3（--paper --text … --du-soft），加 §3.1 的层令牌，以及桌面端界面要用到的
+   补充令牌（圆角、字号、动效、字体）。--capsule-solid 是「无毛玻璃 / 减少透明度」时胶囊的实色端（桌面端 ui-spec §1.1「降级」）。 */
+:root {
+  /* 原生控件（滚动条、输入框光标与占位符、表单控件、选中色）跟着皮肤走；黑夜值在 ../themes/dark.css */
+  color-scheme: light;
+
+  /* 窗口与纸 */
+  --window-stroke: var(--p-white-a15);
+  --paper: var(--p-gray-f9f9fb);
+  --paper-stroke: transparent;
+  --window-fallback: var(--p-gray-ececf0);
+
+  /* 文字（6 级灰） */
+  --text: var(--p-gray-1c1c1e);
+  --text-2: var(--p-gray-3c3c43);
+  --text-3: var(--p-gray-6e6e73);
+  --text-muted: var(--p-gray-8e8e93);
+  --text-faint: var(--p-gray-aeaeb2);
+  --text-disabled: var(--p-gray-c7c7cc);
+
+  /* 线与底 */
+  --line: var(--p-gray-eeeef0);
+  --track: var(--p-gray-e5e5ea);
+  --fill-2: var(--p-gray-f2f2f7);
+  --fill-3: var(--p-gray-f6f6f8);
+
+  /* 卡片 */
+  --card: var(--p-white);
+  --card-stroke: var(--p-black-a06);
+  --card-shadow: 0 1px 2px var(--p-black-a03), 0 6px 18px -8px var(--p-black-a06);
+  --card-upcoming: var(--p-gray-fbfbfc);
+  --card-overdue-stroke: var(--p-red-f0304f-a40);
+
+  /* 玻璃胶囊（工具栏） */
+  --capsule: linear-gradient(180deg, var(--p-gray-f7f7fa-a90), var(--p-gray-efeff4-a80));
+  --capsule-stroke: 0.5px solid var(--p-black-a10);
+  --capsule-shadow: 0 4px 14px -6px var(--p-black-a20);
+  --capsule-blur: 20px;
+  --capsule-solid: var(--p-gray-f7f7fa);
+  --capsule-on: var(--p-white);
+  --capsule-on-shadow: 0 1px 3px var(--p-black-a13);
+
+  /* 今日速览胶囊 / Toast */
+  --pill: var(--p-white-a66);
+  --pill-stroke: 0.5px solid var(--p-black-a12);
+  --pill-shadow: 0 12px 30px -10px var(--p-black-a27), 0 1px 3px var(--p-black-a06);
+  --pill-blur: 24px;
+
+  /* 浮层 */
+  --scrim: var(--p-gray-1c1c1e-a24);
+  --scrim-blur: 8px;
+  --modal: var(--p-white);
+  --modal-stroke: 0.5px solid var(--p-black-a06);
+  --modal-shadow: 0 30px 70px -16px var(--p-black-a30), 0 2px 8px var(--p-black-a08);
+
+  /* 语义色：主色 / 文字色 / 浅底 */
+  --ev: var(--p-blue-0a7aff);
+  --ev-text: var(--p-blue-0a7aff);
+  --ev-soft: var(--p-blue-0a7aff-a08);
+  --rm: var(--p-orange-f08c00);
+  --rm-text: var(--p-orange-bb6d00);
+  --rm-soft: var(--p-tint-fdf0de);
+  --st: var(--p-green-12a37a);
+  --st-text: var(--p-green-0e7f5f);
+  --st-soft: var(--p-green-e0f3ee);
+  --du: var(--p-red-f0304f);
+  --du-text: var(--p-red-bb253e);
+  --du-soft: var(--p-tint-fde4e8);
+  --today: var(--p-blue-0a7aff);
+  --on-today: var(--p-white);
+  --check-glyph: var(--p-white);
+
+  /* 层令牌（视觉规范 §3.1） */
+  --surface: var(--paper);
+  --elevated: var(--p-white);
+  --control: var(--p-white);
+  --control-on: var(--capsule-on);
+  --ink: var(--p-gray-1c1c1e);
+  --on-ink: var(--p-white);
+  --on-accent: var(--p-white);
+  --ring: var(--p-gray-d1d1d6);
+  --due-stroke: var(--p-red-f0304f-a40);
+  --due-card: var(--p-white);
+  --task-done-bar: var(--p-green-12a37a-a40);
+  --event-glow: var(--p-blue-0a7aff-a14);
+  --fade-card: var(--p-white);
+  --fade-card-0: var(--p-white-a00);
+  --fade-elevated: var(--p-white);
+  --fade-elevated-0: var(--p-white-a00);
+  --holiday: var(--p-gray-8e8e93);
+  --shadow-faint: 0 1px 2px var(--p-black-a06);
+  --shadow-select: 0 2px 10px -2px var(--p-black-a12), 0 1px 2px var(--p-black-a08);
+  --shadow-pop: 0 10px 24px -8px var(--p-black-a25), 0 1px 3px var(--p-black-a10);
+
+  /* 圆角 */
+  --radius-checkbox: var(--p-radius-4-5);
+  --radius-sm: var(--p-radius-6);
+  --radius-row: var(--p-radius-8);
+  --radius-field: var(--p-radius-10);
+  --radius-md: var(--p-radius-14);
+  --radius-lg: var(--p-radius-16);
+  --radius-paper: var(--p-radius-18);
+  --radius-xl: var(--p-radius-22);
+  --radius-window: var(--p-radius-26);
+  --radius-pill: var(--p-radius-99);
+
+  /* 字号（视觉规范 §4） */
+  --font-shortcut: var(--p-font-10);
+  --font-caption: var(--p-font-11);
+  --font-small: var(--p-font-12);
+  --font-key-point: var(--p-font-12-5);
+  --font-body: var(--p-font-13);
+  --font-input: var(--p-font-14);
+  --font-card-title: var(--p-font-14-5);
+  --font-section: var(--p-font-15);
+  --font-modal-title: var(--p-font-20);
+  --font-stat: var(--p-font-22);
+  --font-page-title: var(--p-font-26);
+  --weight-regular: var(--p-weight-400);
+  --weight-medium: var(--p-weight-500);
+  --weight-semibold: var(--p-weight-600);
+  --weight-bold: var(--p-weight-700);
+
+  /* 间距 */
+  --space-2: var(--p-space-2);
+  --space-4: var(--p-space-4);
+  --space-6: var(--p-space-6);
+  --space-8: var(--p-space-8);
+  --space-10: var(--p-space-10);
+  --space-12: var(--p-space-12);
+  --space-14: var(--p-space-14);
+  --space-16: var(--p-space-16);
+  --space-18: var(--p-space-18);
+  --space-20: var(--p-space-20);
+  --space-24: var(--p-space-24);
+  --space-26: var(--p-space-26);
+  --space-32: var(--p-space-32);
+  --space-40: var(--p-space-40);
+
+  /* 动效（ui-spec §0.4；prefers-reduced-motion 时 styles.css 清零） */
+  --duration-fast: var(--p-duration-150);
+  --duration-exit: var(--p-duration-120);
+  --duration-modal: var(--p-duration-180);
+  --duration-card: var(--p-duration-200);
+  --ease-out: ease-out;
+
+  /* 字体（ui-spec §0.1） */
+  --font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Segoe UI Variable",
+    "Segoe UI", "Microsoft YaHei UI", sans-serif;
+
+  /* 预览模式模拟壁纸 */
+  --preview-wallpaper: var(--p-wallpaper);
+}

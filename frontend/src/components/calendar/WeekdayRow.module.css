@@ -1,0 +1,19 @@
+/* Weeks slide under it (the grid reaches up behind it): the paper fade keeps the labels clear. */
+.row {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  height: 26px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(var(--paper) 45%, transparent);
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) 0 0 var(--space-8);
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+}

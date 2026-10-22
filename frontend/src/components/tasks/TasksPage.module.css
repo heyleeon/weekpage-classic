@@ -1,0 +1,23 @@
+/* Tasks page body (ui-spec §4.1–§4.2, 1280×860): left content x 32–306, divider x 324,
+   main x 344–1252, header y 80–108, grid from y 120, 24 free at the bottom. */
+.page {
+  --tasks-left-pad: 22px;
+  /* The header floats over the grid; the grid's first row starts this far below its top. */
+  --tasks-head-space: 40px;
+  --tasks-left-w: calc(var(--tasks-left-pad) + 274px + var(--space-18) + 1px);
+
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  padding-top: 17px;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--space-20);
+  margin-top: -2px;
+}

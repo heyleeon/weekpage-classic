@@ -1,0 +1,44 @@
+/* Step input preview line (ui-spec §10.6): the calendar input's line (§2.6) on one line —
+   11 / 14, arrow --text-faint, date --ev-text 600 tabular, words --text-muted. */
+.preview {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  line-height: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: previewIn 0.16s var(--ease-out);
+}
+
+@keyframes previewIn {
+  from {
+    opacity: 0;
+    translate: 0 -3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview {
+    animation: none;
+  }
+}
+
+.arrow {
+  color: var(--text-faint);
+}
+
+.date {
+  color: var(--ev-text);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.text {
+  color: var(--text-muted);
+}
+
+.faint {
+  color: var(--text-faint);
+}

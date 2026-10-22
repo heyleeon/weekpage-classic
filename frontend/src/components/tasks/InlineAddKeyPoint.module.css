@@ -1,0 +1,53 @@
+/* Inline 「+ 关键点」 row (ui-spec §8.7): h 30, radius 8, 1.5px --ev, --card; a typed date adds
+   the preview line under the text (the row grows, like the calendar input). */
+.row {
+  margin-top: var(--space-6);
+  padding: 0 5px 0 var(--space-8);
+  border: 1.5px solid var(--ev);
+  border-radius: var(--radius-row);
+  background: var(--card);
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 27px;
+}
+
+/* Lined up with the typed text (past the 12px plus and the 6 gap). */
+.preview {
+  margin: -3px 0 0 18px;
+  padding-bottom: 5px;
+}
+
+/* Short card (§8.2 / §8.7): takes the key point list's place, 14 below the time bar. */
+.standalone {
+  margin-top: 14px;
+}
+
+.plus {
+  flex: none;
+  color: var(--ev-text);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--font-key-point);
+}
+
+.input::placeholder {
+  color: var(--text-faint);
+}
+
+.badge {
+  display: inline-flex;
+  flex: none;
+}

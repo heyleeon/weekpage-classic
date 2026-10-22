@@ -1,0 +1,193 @@
+/* WeekPage 设计系统 · 黑夜主题（V3-C）
+
+   只重映射语义层颜色，组件零改动（为什么这样做见 docs/architecture.md §4「主题」与 docs/memory/decisions.md 2026-10-01 12:15:43 条）。
+   同一组值写两处：手动选「黑夜」= <html data-theme="dark">；跟随系统 = 没有 data-theme 时跟
+   prefers-color-scheme 走（手动选「白天」写 data-theme="light"，挡住系统深色）。
+   两段内容必须逐条一致，改一处就要改两处。 */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* 窗口与纸 */
+  --window-stroke: var(--p-white-a12);
+  --paper: var(--p-gray-1c1c1e);
+  --paper-stroke: var(--p-white-a08);
+  --window-fallback: var(--p-gray-0e0e10);
+
+  /* 文字（6 级灰） */
+  --text: var(--p-gray-f5f5f7);
+  --text-2: var(--p-gray-d1d1d6);
+  --text-3: var(--p-gray-aeaeb2);
+  --text-muted: var(--p-gray-98989d);
+  --text-faint: var(--p-gray-8e8e93);
+  --text-disabled: var(--p-gray-636366);
+
+  /* 线与底 */
+  --line: var(--p-white-a07);
+  --track: var(--p-white-a10);
+  --fill-2: var(--p-white-a06);
+  --fill-3: var(--p-white-a03);
+
+  /* 卡片 */
+  --card: var(--p-white-a03);
+  --card-stroke: var(--p-white-a07);
+  --card-shadow: none;
+  --card-upcoming: var(--p-white-a02);
+  --card-overdue-stroke: var(--p-red-ff453a-a55);
+
+  /* 玻璃胶囊（工具栏） */
+  --capsule: var(--p-white-a08);
+  --capsule-stroke: 1px solid var(--p-white-a06);
+  --capsule-shadow: inset 0 1px 0 var(--p-white-a15), 0 6px 18px var(--p-black-a45);
+  --capsule-blur: 20px;
+  --capsule-solid: var(--p-gray-2c2c2e);
+  --capsule-on: var(--p-white-a16);
+  --capsule-on-shadow: none;
+
+  /* 今日速览胶囊 / Toast */
+  --pill: var(--p-white-a09);
+  --pill-stroke: 1px solid var(--p-white-a08);
+  --pill-shadow: inset 0 1px 0 var(--p-white-a15), 0 12px 30px var(--p-black-a60);
+  --pill-blur: 24px;
+
+  /* 浮层 */
+  --scrim: var(--p-gray-060609-a65);
+  --scrim-blur: 10px;
+  --modal: var(--p-gray-2c2c2e);
+  --modal-stroke: 1px solid var(--p-white-a10);
+  --modal-shadow:
+    inset 0 1px 0 var(--p-white-a14), 0 30px 80px var(--p-black-a70), 0 0 0 1px var(--p-black-a40);
+
+  /* 语义色：主色 / 文字色 / 浅底 */
+  --ev: var(--p-blue-0a84ff);
+  --ev-text: var(--p-blue-409cff);
+  --ev-soft: var(--p-blue-0a84ff-a08);
+  --rm: var(--p-orange-ff9f0a);
+  --rm-text: var(--p-orange-ffb84d);
+  --rm-soft: var(--p-orange-ff9f0a-a16);
+  --st: var(--p-green-30d158);
+  --st-text: var(--p-green-6ee08c);
+  --st-soft: var(--p-green-30d158-a17);
+  --du: var(--p-red-ff453a);
+  --du-text: var(--p-red-ff7b72);
+  --du-soft: var(--p-red-ff453a-a18);
+  --today: var(--p-blue-0a84ff);
+  --on-today: var(--p-white);
+  --check-glyph: var(--p-gray-1c1c1e);
+
+  /* 层令牌（视觉规范 §3.1） */
+  --surface: var(--paper);
+  --elevated: var(--p-gray-2c2c2e);
+  --control: var(--p-white-a08);
+  --control-on: var(--p-white-a16);
+  --ink: var(--p-gray-f5f5f7);
+  --on-ink: var(--p-gray-1c1c1e);
+  --on-accent: var(--p-white);
+  --ring: var(--p-gray-636366);
+  --due-stroke: var(--p-red-ff453a-a55);
+  --due-card: var(--p-red-ff453a-a06);
+  --task-done-bar: var(--p-green-30d158-a40);
+  --event-glow: var(--p-blue-0a84ff-a20);
+  --fade-card: var(--p-gray-232325);
+  --fade-card-0: var(--p-gray-232325-a00);
+  --fade-elevated: var(--p-gray-2c2c2e);
+  --fade-elevated-0: var(--p-gray-2c2c2e-a00);
+  --holiday: var(--p-gray-98989d);
+  --shadow-faint: none;
+  --shadow-select: 0 0 0 1px var(--p-white-a12);
+  --shadow-pop: 0 10px 24px -6px var(--p-black-a70);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    /* 窗口与纸 */
+    --window-stroke: var(--p-white-a12);
+    --paper: var(--p-gray-1c1c1e);
+    --paper-stroke: var(--p-white-a08);
+    --window-fallback: var(--p-gray-0e0e10);
+
+    /* 文字（6 级灰） */
+    --text: var(--p-gray-f5f5f7);
+    --text-2: var(--p-gray-d1d1d6);
+    --text-3: var(--p-gray-aeaeb2);
+    --text-muted: var(--p-gray-98989d);
+    --text-faint: var(--p-gray-8e8e93);
+    --text-disabled: var(--p-gray-636366);
+
+    /* 线与底 */
+    --line: var(--p-white-a07);
+    --track: var(--p-white-a10);
+    --fill-2: var(--p-white-a06);
+    --fill-3: var(--p-white-a03);
+
+    /* 卡片 */
+    --card: var(--p-white-a03);
+    --card-stroke: var(--p-white-a07);
+    --card-shadow: none;
+    --card-upcoming: var(--p-white-a02);
+    --card-overdue-stroke: var(--p-red-ff453a-a55);
+
+    /* 玻璃胶囊（工具栏） */
+    --capsule: var(--p-white-a08);
+    --capsule-stroke: 1px solid var(--p-white-a06);
+    --capsule-shadow: inset 0 1px 0 var(--p-white-a15), 0 6px 18px var(--p-black-a45);
+    --capsule-blur: 20px;
+    --capsule-solid: var(--p-gray-2c2c2e);
+    --capsule-on: var(--p-white-a16);
+    --capsule-on-shadow: none;
+
+    /* 今日速览胶囊 / Toast */
+    --pill: var(--p-white-a09);
+    --pill-stroke: 1px solid var(--p-white-a08);
+    --pill-shadow: inset 0 1px 0 var(--p-white-a15), 0 12px 30px var(--p-black-a60);
+    --pill-blur: 24px;
+
+    /* 浮层 */
+    --scrim: var(--p-gray-060609-a65);
+    --scrim-blur: 10px;
+    --modal: var(--p-gray-2c2c2e);
+    --modal-stroke: 1px solid var(--p-white-a10);
+    --modal-shadow:
+      inset 0 1px 0 var(--p-white-a14), 0 30px 80px var(--p-black-a70), 0 0 0 1px var(--p-black-a40);
+
+    /* 语义色：主色 / 文字色 / 浅底 */
+    --ev: var(--p-blue-0a84ff);
+    --ev-text: var(--p-blue-409cff);
+    --ev-soft: var(--p-blue-0a84ff-a08);
+    --rm: var(--p-orange-ff9f0a);
+    --rm-text: var(--p-orange-ffb84d);
+    --rm-soft: var(--p-orange-ff9f0a-a16);
+    --st: var(--p-green-30d158);
+    --st-text: var(--p-green-6ee08c);
+    --st-soft: var(--p-green-30d158-a17);
+    --du: var(--p-red-ff453a);
+    --du-text: var(--p-red-ff7b72);
+    --du-soft: var(--p-red-ff453a-a18);
+    --today: var(--p-blue-0a84ff);
+    --on-today: var(--p-white);
+    --check-glyph: var(--p-gray-1c1c1e);
+
+    /* 层令牌（视觉规范 §3.1） */
+    --surface: var(--paper);
+    --elevated: var(--p-gray-2c2c2e);
+    --control: var(--p-white-a08);
+    --control-on: var(--p-white-a16);
+    --ink: var(--p-gray-f5f5f7);
+    --on-ink: var(--p-gray-1c1c1e);
+    --on-accent: var(--p-white);
+    --ring: var(--p-gray-636366);
+    --due-stroke: var(--p-red-ff453a-a55);
+    --due-card: var(--p-red-ff453a-a06);
+    --task-done-bar: var(--p-green-30d158-a40);
+    --event-glow: var(--p-blue-0a84ff-a20);
+    --fade-card: var(--p-gray-232325);
+    --fade-card-0: var(--p-gray-232325-a00);
+    --fade-elevated: var(--p-gray-2c2c2e);
+    --fade-elevated-0: var(--p-gray-2c2c2e-a00);
+    --holiday: var(--p-gray-98989d);
+    --shadow-faint: none;
+    --shadow-select: 0 0 0 1px var(--p-white-a12);
+    --shadow-pop: 0 10px 24px -6px var(--p-black-a70);
+  }
+}

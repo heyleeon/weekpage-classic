@@ -1,0 +1,73 @@
+/* Day count headline (ui-spec §8.2, §10.2). Card: words 12/500, count 19/700, whole sentence
+   14/700. Detail: words 13/500, count 22/700, whole sentence 16/700. Line height = the count's,
+   so the line sits on one baseline with what is next to it. */
+.headline {
+  flex: none;
+  color: var(--dc-words);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.count {
+  margin: 0 1px;
+  color: var(--dc-count);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.whole {
+  color: var(--dc-count);
+  font-weight: var(--weight-bold);
+}
+
+.card {
+  font-size: var(--font-small);
+  line-height: 22px;
+}
+
+.card .count {
+  font-size: 19px;
+}
+
+.card.whole {
+  font-size: var(--font-input);
+}
+
+.detail {
+  font-size: var(--font-body);
+  line-height: 26px;
+}
+
+.detail .count {
+  font-size: var(--font-stat);
+}
+
+.detail.whole {
+  font-size: 16px;
+}
+
+.text {
+  --dc-words: var(--text-3);
+  --dc-count: var(--text);
+}
+
+.muted {
+  --dc-words: var(--text-muted);
+  --dc-count: var(--text-3);
+}
+
+.st {
+  --dc-words: var(--st-text);
+  --dc-count: var(--st-text);
+}
+
+.du {
+  --dc-words: var(--du-text);
+  --dc-count: var(--du);
+}
+
+.rm {
+  --dc-words: var(--rm-text);
+  --dc-count: var(--rm-text);
+}

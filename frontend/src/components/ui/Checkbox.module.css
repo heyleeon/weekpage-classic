@@ -1,0 +1,35 @@
+.box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  border: 1.5px solid var(--text-disabled);
+  border-radius: var(--radius-checkbox);
+  background: transparent;
+  color: var(--on-accent);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.box:has(.input:focus-visible) {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.input {
+  position: absolute;
+  inset: -1.5px;
+  margin: 0;
+  opacity: 0;
+  cursor: default;
+}
+
+.checked {
+  background: var(--text-disabled);
+}
+
+.disabled {
+  opacity: 0.45;
+}

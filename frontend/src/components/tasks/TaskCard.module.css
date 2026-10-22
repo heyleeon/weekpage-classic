@@ -1,0 +1,281 @@
+/* Task card (ui-spec §8.2, §8.5): radius 16, padding 14×16, short card ≈141 high. */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 13px var(--space-16);
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  /* Row colour for the key point swipe (SwipeRow). In dark mode the card colours are see-through,
+     so the swiped surface also lays them over the paper the card sits on (--swipe-base). */
+  --swipe-surface: var(--card);
+  --swipe-base: var(--paper);
+  box-shadow: var(--card-shadow);
+  outline: 1.5px solid transparent;
+  outline-offset: -1px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    outline-color 400ms var(--ease-out);
+}
+
+.card:hover:not(.placeholder):not(.overlay) {
+  box-shadow: var(--shadow-select);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 1px;
+}
+
+.upcoming,
+.done {
+  background: var(--card-upcoming);
+  --swipe-surface: var(--card-upcoming);
+}
+
+.overdue {
+  border-color: var(--due-stroke);
+  background: var(--due-card);
+  --swipe-surface: var(--due-card);
+}
+
+.highlight {
+  outline-color: var(--st);
+}
+
+.highlightFading {
+  outline-color: transparent;
+}
+
+.adding,
+.adding:hover:not(.placeholder):not(.overlay) {
+  outline: 1.5px solid var(--ev);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+/* title row */
+/* 26 high: the status mark's hit area (26); title, ⚠ N and archive centre on it. An overdue
+   card keeps its title in the text colour: the red stroke, the red mark and the red count say it. */
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 26px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: var(--font-card-title);
+  font-weight: var(--weight-semibold);
+  line-height: 21px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upcoming .title,
+.done .title {
+  color: var(--text-3);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex: none;
+}
+
+/* 「⚠ N」 (ui-spec §9.3): the steps may sit below the card's visible rows, so the title row says
+   it too; 「N 步逾期」 is its tip. */
+.overdueSteps {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: var(--status-tag-h);
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--du-soft);
+  color: var(--du-text);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* Round icon buttons of the card (archive, + step): the icon springs up on hover. */
+.archive,
+.addKp {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  color: var(--text-2);
+  cursor: pointer;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform 0.34s var(--spring);
+}
+
+.archive svg,
+.addKp svg {
+  transition: transform 0.34s var(--spring);
+}
+
+.archive:hover,
+.addKp:hover {
+  background: var(--track);
+}
+
+.archive:active,
+.addKp:active {
+  transform: scale(0.9);
+}
+
+.archive {
+  width: var(--status-tag-h);
+  height: var(--status-tag-h);
+}
+
+/* The box lifts its lid: a little hop. */
+.archive:hover svg {
+  transform: translateY(-1.5px) scale(1.12);
+}
+
+.archiveDone,
+.archiveDone:hover {
+  background: var(--st);
+  color: var(--on-accent);
+}
+
+.archive:focus-visible,
+.addKp:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive,
+  .addKp,
+  .archive svg,
+  .addKp svg {
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+}
+
+.kps {
+  margin-top: 14px;
+}
+
+/* footer */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 24px;
+  margin-top: var(--space-10);
+}
+
+.footerSplit {
+  box-sizing: content-box;
+  padding-top: var(--space-10);
+  border-top: 1px solid var(--line);
+}
+
+/* ✓ a/b: done / all key points (「已完成 a / b」 is its tip); all done → green. */
+.progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  font-variant-numeric: tabular-nums;
+  cursor: default;
+}
+
+.progressAll {
+  color: var(--st-text);
+  font-weight: var(--weight-semibold);
+}
+
+/* Just turned into a task from the inbox (green outline): the tray says where it came from. */
+.fromInbox {
+  display: inline-flex;
+  color: var(--st-text);
+  animation: fromInboxIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fromInboxIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.6);
+  }
+}
+
+.addKp {
+  width: 24px;
+  height: 24px;
+  margin-left: auto;
+}
+
+/* The plus turns a quarter on hover. */
+.addKp:hover svg {
+  transform: rotate(90deg);
+}
+
+:global(:root[data-theme="dark"]) .addKp {
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .addKp {
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fromInbox {
+    animation: none;
+  }
+}
+
+/* drag (ui-spec §7.2) */
+.overlay {
+  background: linear-gradient(var(--card), var(--card)), var(--paper);
+  box-shadow: var(--shadow-pop);
+  transform: scale(1.02) rotate(1deg);
+  cursor: grabbing;
+}
+
+.overlay.upcoming,
+.overlay.done {
+  background: linear-gradient(var(--card-upcoming), var(--card-upcoming)), var(--paper);
+}
+
+.overlay.overdue {
+  background: linear-gradient(var(--due-card), var(--due-card)), var(--paper);
+}
+
+.placeholder {
+  border: 1.5px dashed var(--track);
+  background: var(--fill-2);
+  box-shadow: none;
+}
+
+.placeholder > * {
+  visibility: hidden;
+}
+
+.tagWrap {
+  display: inline-flex;
+}

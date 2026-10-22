@@ -1,0 +1,60 @@
+/* Tip (ui-spec §8.1): the detail track's bubble (.dotTip) for any compact control. The anchor adds
+   no box of its own; the bubble is measured hidden, then springs up from the trigger. */
+.anchor {
+  display: contents;
+}
+
+.tip {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: max-content;
+  max-width: 240px;
+  padding: var(--space-6) var(--space-10);
+  border-radius: var(--radius-row);
+  background: var(--text);
+  color: var(--elevated);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-regular);
+  line-height: 1.45;
+  white-space: pre-line;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.placed {
+  visibility: visible;
+  animation: tipIn 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tipIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.55);
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+/* No room above: hangs below the trigger and springs down. */
+.below {
+  animation-name: tipInBelow;
+}
+
+@keyframes tipInBelow {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.55);
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placed {
+    animation: none;
+  }
+}

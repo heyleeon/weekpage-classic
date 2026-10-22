@@ -1,0 +1,35 @@
+/* useAttention: shake once and a red ring that fades out. */
+.attention {
+  animation:
+    attentionShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97),
+    attentionRing 1.4s ease-out;
+}
+
+@keyframes attentionShake {
+  20%,
+  60% {
+    translate: -5px 0;
+  }
+  40%,
+  80% {
+    translate: 5px 0;
+  }
+}
+
+@keyframes attentionRing {
+  0%,
+  45% {
+    border-color: var(--du);
+    box-shadow: 0 0 0 3px var(--du-soft);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attention {
+    animation: attentionRing 1.4s ease-out;
+  }
+}
+
+.notReady {
+  opacity: 0.45;
+}

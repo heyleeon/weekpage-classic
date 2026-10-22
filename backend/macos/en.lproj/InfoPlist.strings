@@ -1,0 +1,6 @@
+/* App name shown by Finder, Launchpad, Spotlight, notifications and System Settings for English
+   and every other OS language (en is the fallback). Bundled by tauri.release.conf.json
+   (bundle.macOS.files); Info.plist sets LSHasLocalizedDisplayName. Keep in step with i18n.rs
+   Text::AppName and common.appName. */
+"CFBundleDisplayName" = "WeekPage";
+"CFBundleName" = "WeekPage";

@@ -1,0 +1,100 @@
+/* Left column (ui-spec §4.2, §5.2): content 274 wide, 18 to the divider. */
+.panel {
+  /* Opaque row colour for the todo / inbox swipe (SwipeRow): the column sits on the paper. */
+  --swipe-surface: var(--paper);
+  /* The tabs float over the to-do list; the list (or the inbox input) starts this far down. */
+  --todo-head-space: 45px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: var(--tasks-left-w);
+  min-height: 0;
+  margin-bottom: var(--space-24);
+  padding: 0 var(--space-18) 0 var(--tasks-left-pad);
+  border-right: 1px solid var(--line);
+}
+
+/* Floats over the to-do list so rows scroll under the glass tabs; only its controls take the
+   pointer, so a wheel between them reaches the list. */
+.head {
+  position: absolute;
+  top: 0;
+  right: var(--space-18);
+  left: var(--tasks-left-pad);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 35px;
+  pointer-events: none;
+}
+
+.head > * {
+  pointer-events: auto;
+}
+
+.tabs {
+  flex: none;
+}
+
+.tab {
+  padding: 0 var(--space-12);
+}
+
+/* §5.2: selected 600 --text, unselected 400 --text-2 (the shared Capsule uses 500 for the
+   toolbar; attribute selectors outrank its single-class rule regardless of bundle order). */
+.tab[aria-pressed="false"] {
+  font-weight: var(--weight-regular);
+}
+
+.tab[aria-pressed="true"] {
+  font-weight: var(--weight-semibold);
+}
+
+.count {
+  margin-left: var(--space-6);
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  margin-left: var(--space-6);
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background: var(--rm);
+  color: var(--on-accent);
+  font-size: 10px;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+}
+
+.add {
+  composes: glass from "../ui/Glass.module.css";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  color: var(--text-2);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.add:hover {
+  background: var(--control-on);
+}
+
+.add:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}

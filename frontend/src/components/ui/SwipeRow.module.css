@@ -1,0 +1,155 @@
+/* Swipe row (ui-spec §10.14): the surface slides over two full-size layers; whatever the surface
+   uncovers shows the action on that side.
+
+   At rest the row paints like a plain row: no clip, a see-through surface carrying the caller's
+   --swipe-tint. While a side shows ([data-swiped]) the root clips and the surface lays the tint
+   over --swipe-surface (the row colour under it) over --swipe-base (what that colour sits on, for
+   a see-through row colour: the dark card colours are white / red at a few %), so the layers stay
+   hidden. All three are one-colour gradients, never a plain colour: WebKit counts a plain opaque
+   colour as "known opaque" and paints a composited row (a reordered <li>, dnd-kit transform)
+   black under the root's rounded overflow clip.
+
+   The layers are clipped to the uncovered strip (inline clip-path, SwipeRow layerClip), never the
+   whole row: a full-width colour under the surface shows as a hairline at the row's far corners,
+   where the rounded clip is anti-aliased. `overlay` rows (detail timeline) keep the surface still
+   and draw the layers above it, so the row's spine (date, marker, rail) never slides away. */
+
+.root {
+  position: relative;
+  touch-action: pan-y;
+}
+
+.root[data-swiped] {
+  overflow: hidden;
+}
+
+.surface {
+  position: relative;
+  border-radius: inherit;
+  background: linear-gradient(var(--swipe-tint, transparent), var(--swipe-tint, transparent));
+  transition: transform var(--duration-card) var(--ease-out);
+}
+
+.moving .surface {
+  transition: none;
+  user-select: none;
+}
+
+/* The hint peek (SwipeRow `hint`): slower, eased both ways. */
+.peeking .surface {
+  transition-duration: 260ms;
+  transition-timing-function: ease-in-out;
+}
+
+.root[data-swiped] > .surface {
+  border-radius: 0;
+  background:
+    linear-gradient(var(--swipe-tint, transparent), var(--swipe-tint, transparent)),
+    linear-gradient(var(--swipe-surface, var(--card)), var(--swipe-surface, var(--card))),
+    linear-gradient(var(--swipe-base, transparent), var(--swipe-base, transparent));
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  transition:
+    clip-path var(--duration-card) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+/* The clip follows the finger with no lag; colours (armed) still fade. */
+.moving .layer {
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.peeking .layer {
+  transition-duration: 260ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* Over the still surface (SwipeRow `overlay`). */
+.overlayLayer {
+  z-index: 1;
+}
+
+.compact .layer {
+  font-size: var(--font-caption);
+}
+
+/* Swipe right: tick (green) / untick (grey); solid once past the threshold. */
+.rightLayer {
+  justify-content: flex-start;
+  padding-left: var(--space-16);
+}
+
+.compact .rightLayer {
+  padding-left: var(--space-8);
+}
+
+.rightLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.compact .rightLabel {
+  gap: var(--space-4);
+}
+
+.rightLayer[data-armed] .rightLabel {
+  transform: scale(1.06);
+}
+
+.tone_st {
+  background: var(--st-soft);
+  color: var(--st-text);
+}
+
+.tone_st[data-armed] {
+  background: var(--st);
+  color: var(--on-accent);
+}
+
+.tone_muted {
+  background: var(--fill-2);
+  color: var(--text-3);
+}
+
+.tone_muted[data-armed] {
+  background: var(--text-3);
+  color: var(--on-accent);
+}
+
+/* Swipe left: the red delete button sits under the right edge. */
+.leftLayer {
+  justify-content: flex-end;
+  background: var(--du);
+}
+
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex: none;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--on-accent);
+  font: inherit;
+}
+
+.deleteButton:focus-visible {
+  outline: 2px solid var(--on-accent);
+  outline-offset: -4px;
+}

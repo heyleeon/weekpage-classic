@@ -1,0 +1,43 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: none;
+  height: var(--chip-h);
+  padding: 0 7px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+button.chip:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.ev {
+  background: var(--ev-soft);
+  color: var(--ev-text);
+}
+
+.rm {
+  background: var(--rm-soft);
+  color: var(--rm-text);
+}
+
+.st {
+  background: var(--st-soft);
+  color: var(--st-text);
+}
+
+.du {
+  background: var(--du-soft);
+  color: var(--du-text);
+}
+
+.neutral {
+  background: var(--fill-2);
+  color: var(--text-3);
+}

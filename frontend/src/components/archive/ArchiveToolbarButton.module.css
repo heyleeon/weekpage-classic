@@ -1,0 +1,42 @@
+/* 「归档 N」 glass capsule (ui-spec §14.1). */
+.button {
+  composes: glass from "../ui/Glass.module.css";
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: var(--capsule-h);
+  padding: 0 var(--space-14);
+  border-radius: var(--radius-pill);
+  color: var(--text-2);
+  font-size: var(--font-body);
+  white-space: nowrap;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.button:hover:not(.selected) {
+  color: var(--text);
+}
+
+.button:active {
+  opacity: 0.7;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.count {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.selected {
+  border-color: transparent;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-weight: var(--weight-semibold);
+}

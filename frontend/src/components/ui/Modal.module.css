@@ -1,0 +1,91 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 2 * var(--modal-margin));
+  padding: var(--modal-pad-y) var(--modal-pad-x);
+  border: var(--modal-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--modal);
+  box-shadow: var(--modal-shadow);
+  color: var(--text);
+  animation: enter var(--duration-modal) var(--ease-out);
+}
+
+/* The panel itself takes focus when a click lands on blank space; it is the focus trap's root,
+   not a control, so no ring (a key press afterwards would otherwise draw one around it). */
+.modal:focus {
+  outline: none;
+}
+
+/* The task detail grows from 96% (§10.8); other modals from 98% (§15.1). */
+.wide {
+  width: var(--modal-w-wide);
+  animation-name: enter-wide;
+}
+
+.narrow {
+  width: var(--modal-w-narrow);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex: none;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  /* Padding + equal negative margin: room for an inline editor's ring and glow inside the
+     ellipsis clip, with the text staying where it was. */
+  margin: -8px -12px;
+  padding: 8px 12px;
+  overflow: hidden;
+  font-size: var(--font-modal-title);
+  font-weight: var(--weight-bold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  /* Padding + equal negative margin: room for the focus ring / glow (≤ 4px) of a control flush
+     with the edge (the detail's step composer) inside the scroll clip; content stays put. */
+  margin: 0 -4px -4px;
+  padding: 0 4px 4px;
+  /* Vertical only: a sideways trackpad swipe (swipe-to-delete rows) must not slide the panel. */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  flex: none;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes enter-wide {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

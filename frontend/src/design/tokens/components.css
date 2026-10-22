@@ -1,0 +1,125 @@
+/* 第 3 层 · 组件级：贴着具体组件命名（--button-* / --panel-*…），值一律引用第 2 层语义。
+   组件 CSS 只认这一层，永不知道也不该知道最终是哪个 hex。新增组件时在此加一组变量。
+   唯一例外：无复用阶可引的一次性组件尺寸允许在本层就地写 px；颜色不例外。
+
+   WeekPage：尺寸取自 ui-spec（V3-A 1× 实测，≈ 值）。各组件自有的尺寸写在各自的
+   *.module.css 里；这里只放外壳与共享基件的尺寸，以及跨组件共用的几个量。 */
+:root {
+  /* 窗口与纸（ui-spec §1.1 / §1.2） */
+  --frame-radius: var(--radius-window);
+  --paper-inset: var(--space-8);
+  --paper-radius: var(--radius-paper);
+
+  /* 工具栏（§1.3） */
+  --toolbar-h: 36px;
+  --toolbar-margin-top: 19px;
+  --toolbar-margin-right: var(--space-20);
+  --toolbar-margin-left: var(--space-24);
+  --toolbar-gap: var(--space-10);
+  --capsule-h: 35px;
+  --capsule-h-sm: 30px;
+  --capsule-pad: 3px;
+  --capsule-seg-pad-x: var(--space-12);
+  --capsule-nav-btn: 29px;
+
+  /* 液态玻璃（试验，exp/liquid-glass）：所有浮起的胶囊共用一份材质（components/ui/Glass.module.css）。
+     暂时直接引用 primitive；定稿后颜色搬进品牌仓语义层。 */
+  --glass-backdrop: blur(4px) saturate(180%) brightness(1.06);
+  --glass-fill: linear-gradient(180deg, var(--p-white-a16), var(--p-white-a06));
+  --glass-stroke: 0.5px solid var(--p-black-a10);
+  --glass-rim: linear-gradient(
+    135deg,
+    var(--p-white) 0%,
+    var(--p-white-a16) 30%,
+    var(--p-white-a00) 50%,
+    var(--p-white-a16) 70%,
+    var(--p-white-a66) 100%
+  );
+  --glass-inner:
+    inset 0 1px 0.5px var(--p-white), inset 0 0 10px -2px var(--p-white-a66),
+    inset 0 -8px 14px -10px var(--p-black-a10);
+  --glass-shadow: 0 6px 16px -6px var(--p-black-a20), 0 1px 2px var(--p-black-a06);
+  --glass-shadow-float: 0 14px 32px -10px var(--p-black-a27), 0 1px 3px var(--p-black-a06);
+  --glass-mask: var(--p-white);
+  /* Segmented capsule (Capsule): a tinted track and a raised chip for the selected segment. */
+  --segment-track: linear-gradient(180deg, var(--p-black-a06), var(--p-black-a03));
+  --segment-on-shadow: 0 1px 4px var(--p-black-a20), 0 0 0 0.5px var(--p-black-a06);
+
+  /* 浮层与弹层（§15） */
+  --modal-w-wide: 600px;
+  --modal-w-narrow: 420px;
+  --modal-pad-y: var(--space-24);
+  --modal-pad-x: var(--space-26);
+  --modal-margin: var(--space-40);
+  --modal-close: 28px;
+  --popover-gap: var(--space-6);
+  --popover-pad: 18px;
+
+  /* Toast（§15.3） */
+  --toast-h: 34px;
+  --toast-bottom: var(--space-24);
+  --toast-bottom-calendar: 64px;
+  --toast-ms: 6000;
+
+  /* 状态标签 / 小标签（§8.3） */
+  --status-tag-h: 21px;
+  --chip-h: 20px;
+
+  /* 关键点标记（§9.1） */
+  --marker-card: 15px;
+  --marker-detail: 16px;
+
+  /* 复选框 / 开关（§5.4 / §16.2） */
+  --checkbox-size: 16px;
+  --toggle-w: 34px;
+  --toggle-h: 20px;
+
+  /* 小日历（§12.1 / §11.2） */
+  --mini-cal-row-h: 31px;
+  --mini-cal-dot: 28px;
+}
+
+/* 液态玻璃的黑夜值：同 themes/dark.css 一样写两处（手动「黑夜」/ 跟随系统）。 */
+:root[data-theme="dark"] {
+  --glass-backdrop: blur(4px) saturate(160%) brightness(0.9);
+  --glass-fill: linear-gradient(180deg, var(--p-white-a10), var(--p-white-a03));
+  --glass-stroke: 0.5px solid var(--p-black-a40);
+  --glass-rim: linear-gradient(
+    135deg,
+    var(--p-white-a66) 0%,
+    var(--p-white-a10) 30%,
+    var(--p-white-a00) 50%,
+    var(--p-white-a10) 70%,
+    var(--p-white-a16) 100%
+  );
+  --glass-inner:
+    inset 0 1px 0.5px var(--p-white-a16), inset 0 0 10px -2px var(--p-white-a10),
+    inset 0 -8px 14px -10px var(--p-black-a40);
+  --glass-shadow: 0 6px 18px -4px var(--p-black-a45);
+  --glass-shadow-float: 0 14px 34px -8px var(--p-black-a60);
+  --segment-track: linear-gradient(180deg, var(--p-black-a25), var(--p-black-a20));
+  --segment-on-shadow: 0 1px 4px var(--p-black-a40), inset 0 0.5px 0 var(--p-white-a15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --glass-backdrop: blur(4px) saturate(160%) brightness(0.9);
+    --glass-fill: linear-gradient(180deg, var(--p-white-a10), var(--p-white-a03));
+    --glass-stroke: 0.5px solid var(--p-black-a40);
+    --glass-rim: linear-gradient(
+      135deg,
+      var(--p-white-a66) 0%,
+      var(--p-white-a10) 30%,
+      var(--p-white-a00) 50%,
+      var(--p-white-a10) 70%,
+      var(--p-white-a16) 100%
+    );
+    --glass-inner:
+      inset 0 1px 0.5px var(--p-white-a16), inset 0 0 10px -2px var(--p-white-a10),
+      inset 0 -8px 14px -10px var(--p-black-a40);
+    --glass-shadow: 0 6px 18px -4px var(--p-black-a45);
+    --glass-shadow-float: 0 14px 34px -8px var(--p-black-a60);
+    --segment-track: linear-gradient(180deg, var(--p-black-a25), var(--p-black-a20));
+    --segment-on-shadow: 0 1px 4px var(--p-black-a40), inset 0 0.5px 0 var(--p-white-a15);
+  }
+}

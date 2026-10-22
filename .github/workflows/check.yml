@@ -1,0 +1,94 @@
+# Quality gate only: no packaging for release, no secrets.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+
+jobs:
+  macos:
+    name: macos (check.sh)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Rust toolchain from rust-toolchain.toml
+        run: rustup toolchain install && rustc --version
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.28.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install frontend dependencies
+        run: pnpm -C frontend install --frozen-lockfile
+
+      - name: Run check.sh
+        run: bash scripts/check.sh
+
+  windows:
+    name: windows (check.sh be + NSIS debug build)
+    runs-on: windows-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # .claude/ is a symlink view of .agents/; check.sh step 1 verifies the links.
+      - name: Enable git symlinks
+        run: git config --global core.symlinks true
+
+      - uses: actions/checkout@v7
+
+      - name: Install Rust toolchain from rust-toolchain.toml
+        run: rustup toolchain install && rustc --version
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.28.2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install frontend dependencies
+        run: pnpm -C frontend install --frozen-lockfile
+
+      - name: Run check.sh be
+        run: bash scripts/check.sh be
+
+      - name: Build debug NSIS installer (compile + bundle gate, not published)
+        run: pnpm -C frontend tauri build --debug --bundles nsis

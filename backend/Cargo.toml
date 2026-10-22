@@ -1,0 +1,55 @@
+[package]
+name = "weekpage"
+version = "0.2.6"
+description = "WeekPage: a local-first desktop calendar, todo and task board"
+license = "MIT"
+repository = "https://github.com/heyleeon/weekpage-classic"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+default-run = "weekpage"
+
+[lib]
+name = "weekpage"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "weekpage"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "~2.7", features = [] }
+
+[dependencies]
+tauri = { version = "~2.12", features = ["tray-icon", "image-png", "macos-private-api"] }
+tauri-plugin-single-instance = "2.5"
+tauri-plugin-global-shortcut = "2.4"
+tauri-plugin-autostart = "2.7"
+tauri-plugin-notification = "2.5"
+tauri-plugin-log = "2.10"
+tauri-plugin-opener = "2.7"
+rusqlite = { version = "0.40", features = ["bundled"] }
+rusqlite_migration = { version = "2.6", features = ["from-directory"] }
+include_dir = "0.7"
+uuid = { version = "1.26", features = ["v7"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+jiff = "0.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+log = "0.4"
+tokio = { version = "1", features = ["time"] }
+specta = { version = "=2.0.0-rc.25", features = ["derive"] }
+tauri-specta = { version = "=2.0.0-rc.25", features = ["derive", "typescript"] }
+specta-typescript = "=0.0.12"
+sys-locale = "0.3"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2 = "0.6"
+objc2-foundation = "0.3"
+objc2-app-kit = { version = "0.3", features = ["NSPanel", "NSWindow", "NSResponder", "NSScreen", "NSRunningApplication", "NSApplication", "NSStatusItem", "NSStatusBarButton", "NSButton", "NSControl", "NSCell", "NSView", "NSBox", "NSColor", "NSGraphics", "NSEvent", "block2"] }
+objc2-user-notifications = "0.3"
+block2 = "0.6"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows-version = "0.1"

@@ -1,0 +1,54 @@
+/* Day head (ui-spec §2.3): h 22; plain numbers line up with the item icon column (≈12 from the
+   cell's left), today's 22×22 circle starts 6 from it; label 8 after the date. */
+.head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-8);
+  height: 22px;
+  min-width: 0;
+}
+
+.num {
+  padding-left: var(--space-6);
+  color: var(--text);
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.first {
+  font-weight: var(--weight-bold);
+}
+
+.today {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--today);
+  color: var(--on-today);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--holiday);
+  font-size: var(--font-shortcut);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.past .num,
+.past .label {
+  color: var(--text-disabled);
+}

@@ -1,0 +1,153 @@
+/* Archive confirmation (ui-spec §13.3, v2 04-2 with V3 materials). */
+
+.panel {
+  width: 440px;
+  font-variant-numeric: tabular-nums;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.iconTile {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-field);
+  background: var(--st-soft);
+  color: var(--st-text);
+}
+
+.titleText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.title {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: var(--weight-bold);
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  font-weight: var(--weight-regular);
+}
+
+.tiles {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-18);
+}
+
+.tile {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  /* Equal widths, but a tile never gets narrower than its text (「31 days early」). */
+  min-width: max-content;
+  height: 52px;
+  padding: var(--space-10) var(--space-12);
+  border-radius: var(--radius-md);
+  background: var(--fill-3);
+}
+
+.tileValue {
+  font-size: var(--font-section);
+  font-weight: var(--weight-bold);
+  white-space: nowrap;
+}
+
+.tone_text {
+  color: var(--text);
+}
+
+.tone_st {
+  color: var(--st-text);
+}
+
+.tone_du {
+  color: var(--du-text);
+}
+
+.tileLabel {
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+}
+
+.after {
+  margin-top: var(--space-18);
+}
+
+.caption {
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+}
+
+.afterList {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.afterList li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 24px;
+  color: var(--text-2);
+  font-size: var(--font-body);
+}
+
+.afterList svg {
+  flex: none;
+  color: var(--text-muted);
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-top: var(--space-16);
+}
+
+.summaryInput {
+  height: 40px;
+  padding: 0 var(--space-12);
+  border: 1px solid transparent;
+  border-radius: var(--radius-field);
+  background: var(--fill-3);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--font-body);
+  outline: none;
+}
+
+.summaryInput:focus {
+  border-color: var(--ev);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+.summaryInput::placeholder {
+  color: var(--text-faint);
+}
+
+.foot {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-8);
+  margin-top: var(--space-18);
+}

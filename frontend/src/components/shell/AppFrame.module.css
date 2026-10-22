@@ -1,0 +1,15 @@
+/* Transparent outer ring showing the native material (ui-spec §1.1): radius 26, 1px stroke,
+   the paper sits 8px inside. Without vibrancy the ring is solid --window-fallback. */
+.frame {
+  position: relative;
+  height: 100vh;
+  padding: var(--paper-inset);
+  border: 1px solid var(--window-stroke);
+  border-radius: var(--frame-radius);
+  background: transparent;
+  overflow: hidden;
+}
+
+:global(.no-vibrancy) .frame {
+  background: var(--window-fallback);
+}

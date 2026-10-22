@@ -1,0 +1,85 @@
+/* 全局样式入口。三层 token 必须按 primitive → semantic → components 的顺序引入：
+   后一层引用前一层的 CSS 变量，顺序错了变量会解析不到。
+   WeekPage：semantic 之后紧跟黑夜主题（只重映射语义层），再到组件层。不引 Tailwind（理由见 docs/memory/decisions.md「基线偏离」）。 */
+@import "./design/tokens/primitive.css";
+@import "./design/tokens/semantic.css";
+@import "./design/themes/dark.css";
+@import "./design/tokens/components.css";
+
+/* ── 基础全局样式 ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+/* 窗口透明：外圈露出原生毛玻璃（macOS vibrancy / Win11 Mica），纸是不透明的 div。 */
+html,
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+body {
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: default;
+}
+
+/* WebKit (the macOS window) draws an inline <svg> at whole CSS px but snaps borders and backgrounds
+   to device px, so on Retina an icon lands up to 1 device px off the circle or pill around it (the
+   bell in a 15px marker visibly sits low). Any transform moves the icon onto the device-px path;
+   Chromium (WebView2) draws the same either way. */
+svg {
+  transform: translate(0);
+}
+
+/* 无原生毛玻璃（Win10 / 降级）：外圈用实色，胶囊去掉 backdrop-filter（ui-spec §1.1「状态」）。 */
+.no-vibrancy {
+  --capsule: var(--capsule-solid);
+}
+
+/* 浏览器预览模式（无 Tauri）：body 上铺一张模拟壁纸，代替真实桌面。 */
+.preview-wallpaper {
+  background: var(--preview-wallpaper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-exit: 0ms;
+    --duration-modal: 0ms;
+    --duration-card: 0ms;
+  }
+}

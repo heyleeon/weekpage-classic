@@ -1,0 +1,6 @@
+# Contract files (bindings.ts, demo-snapshot.json) are compared byte-for-byte across platforms.
+* text=auto eol=lf
+
+*.png binary
+*.icns binary
+*.ico binary

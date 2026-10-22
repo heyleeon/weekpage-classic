@@ -1,0 +1,11 @@
+/* The opaque "paper" (ui-spec §1.2): --paper, radius 18, 1px --paper-stroke (dark only). */
+.paper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--paper-stroke);
+  border-radius: var(--paper-radius);
+  background: var(--paper);
+  overflow: hidden;
+}

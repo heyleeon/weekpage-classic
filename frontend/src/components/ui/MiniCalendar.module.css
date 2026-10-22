@@ -1,0 +1,159 @@
+.cal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+}
+
+.month {
+  color: var(--text-2);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+}
+
+.pager {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: var(--fill-2);
+}
+
+.pageBtn:disabled {
+  color: var(--text-disabled);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--mini-cal-row-h);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--font-body);
+}
+
+.cell:disabled {
+  color: var(--text-disabled);
+}
+
+.cell:focus-visible {
+  outline: none;
+}
+
+/* State classes sit on the number (one element), so specificity never fights. */
+.num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--mini-cal-dot);
+  height: var(--mini-cal-dot);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.cell:hover:not(:disabled) .num:not(.selected):not(.inRange) {
+  background: var(--fill-2);
+}
+
+.cell:focus-visible .num {
+  outline: 2px solid var(--ev);
+  outline-offset: 1px;
+}
+
+/* Past days stay grey when they can be picked (a disabled cell is lighter still). */
+.past {
+  color: var(--text-muted);
+}
+
+.today {
+  box-shadow: inset 0 0 0 1.5px var(--today);
+  color: var(--today);
+  font-weight: var(--weight-semibold);
+}
+
+/* Square cells + range band (「变成任务」, ui-spec §11.2). */
+.numCell {
+  min-width: 0;
+  width: 100%;
+  height: 30px;
+  border-radius: var(--radius-sm);
+}
+
+.selected {
+  box-shadow: none;
+  color: var(--on-accent);
+  font-weight: var(--weight-semibold);
+}
+
+/* Today selected: the --today frame stays, a hairline of the panel colour between it and the fill. */
+.today.selected {
+  box-shadow:
+    inset 0 0 0 1.5px var(--today),
+    inset 0 0 0 3px var(--elevated);
+}
+
+.selected.rm {
+  background: var(--rm);
+}
+
+.selected.st {
+  background: var(--st);
+}
+
+.inRange {
+  border-radius: 0;
+  background: var(--st-soft);
+  color: var(--text);
+}
+
+.rangeStart {
+  border-radius: var(--radius-row) 0 0 var(--radius-row);
+}
+
+.rangeEnd {
+  border-radius: 0 var(--radius-row) var(--radius-row) 0;
+}
+
+.rangeStart.rangeEnd {
+  border-radius: var(--radius-row);
+}

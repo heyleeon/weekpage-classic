@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Menu bar app: no Dock icon, no Dock flash at launch (architecture §4). -->
+  <key>LSUIElement</key>
+  <true/>
+  <!-- Keep the 30 s reminder heartbeat from being throttled by App Nap. -->
+  <key>NSAppSleepDisabled</key>
+  <true/>
+  <!-- UI languages (frontend/src/i18n). WebKit derives navigator.languages from the app's
+       declared localizations, so the "follow system" language setting needs them to see a
+       Chinese OS as Chinese instead of falling back to the development region (en). -->
+  <key>CFBundleLocalizations</key>
+  <array>
+    <string>zh-Hans</string>
+    <string>en</string>
+  </array>
+  <!-- The app name goes through macos/<lang>.lproj/InfoPlist.strings too (bundled by
+       tauri.release.conf.json). Both languages say WeekPage for now; the files stay so that a
+       localized name later only needs new strings. The .app file name is productName (WeekPage). -->
+  <key>LSHasLocalizedDisplayName</key>
+  <true/>
+</dict>
+</plist>

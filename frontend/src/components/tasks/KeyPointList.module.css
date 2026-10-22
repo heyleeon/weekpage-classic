@@ -1,0 +1,119 @@
+/* Card key point rows (ui-spec §8.6): 24 high, marker 15, gap 8, text 12.5; notes too. A note's
+   or a dated step's date at the end. */
+.scroll > :first-child {
+  overscroll-behavior: contain;
+}
+
+/* The scroll area is 4px wider on each side so the rows' -4px margins stay inside it (no
+   sideways overflow, hover backgrounds not clipped). */
+.scroll {
+  margin: 0 -4px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  animation: grow var(--duration-card) var(--ease-out);
+}
+
+.scroll .list {
+  padding: 0 4px;
+}
+
+@keyframes grow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.item {
+  flex: none;
+  margin: 0 -4px;
+}
+
+.swipe {
+  border-radius: var(--radius-sm);
+}
+
+/* The sliding surface: while swiped SwipeRow paints it the card colour (--swipe-surface, set per
+   card status) over the paper (--swipe-base) so the swipe actions underneath stay hidden; hover
+   tints it. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 24px;
+  padding: 0 4px;
+}
+
+.row:hover {
+  background: linear-gradient(var(--fill-3), var(--fill-3)), var(--swipe-surface);
+}
+
+.flash {
+  animation: flash 1.2s var(--ease-out);
+}
+
+@keyframes flash {
+  from,
+  60% {
+    background-color: color-mix(in srgb, var(--ev) 8%, var(--swipe-surface));
+  }
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  font-size: var(--font-key-point);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Steps change only in the detail (features.cardStepActions off): the text button's hit area
+   covers the whole row, marker and row end included, so a click anywhere opens the detail. */
+.wholeRow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.text:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: -2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Done steps go grey, open ones stay dark (2026-10-02: no 「current」 row any more). */
+.textDone {
+  color: var(--text-muted);
+}
+
+.textOpen {
+  color: var(--text);
+}
+
+/* Date at the row end: a note's (2026-10-02), a dated step's (lib/keyPoint.ts cardRowDate). */
+.date {
+  flex: none;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+/* An overdue row (ui-spec §9.3) ends with its date in red; 「逾期 N 天」 is the row's tip. */
+.late {
+  flex: none;
+  color: var(--du-text);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,76 @@
+/* Glass toast (ui-spec §15.3): h 34, pill, under the overlay layer, bottom-centred. */
+.host {
+  composes: glass from "../ui/Glass.module.css";
+  position: absolute;
+  left: 50%;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--toast-h);
+  max-width: calc(100% - 2 * var(--space-24));
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glass-shadow-float);
+  color: var(--text);
+  font-size: var(--font-body);
+  white-space: nowrap;
+  transform: translateX(-50%);
+  animation: rise var(--duration-fast) var(--ease-out);
+}
+
+/* Already showing when the host mounted (language switch): no rise replay. */
+.instant {
+  animation: none;
+}
+
+.bottom {
+  bottom: var(--toast-bottom);
+}
+
+.bottomCalendar {
+  bottom: var(--toast-bottom-calendar);
+}
+
+/* Longer (e.g. English) texts end in an ellipsis instead of leaving the paper. */
+.text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon {
+  flex: none;
+  color: var(--st);
+}
+
+.iconNotice {
+  color: var(--text-3);
+}
+
+.undo {
+  flex: none;
+  margin-left: var(--space-4);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ev-text);
+  font-size: var(--font-body);
+  font-weight: var(--weight-semibold);
+}
+
+.undo:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

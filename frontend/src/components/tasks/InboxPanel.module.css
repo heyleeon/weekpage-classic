@@ -1,0 +1,179 @@
+/* 收件箱 (ui-spec §6.2–§6.3). Each row slides on a SwipeRow (§10.14) over the paper
+   (--swipe-surface, set on the left column); the lift shadow sits on the swipe root, which
+   clips its contents while swiped. */
+.input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex: none;
+  height: 32px;
+  margin-top: var(--todo-head-space);
+  padding: 0 var(--space-12);
+  border: 1px solid transparent;
+  border-radius: var(--radius-field);
+  background: var(--fill-3);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.input:focus-within {
+  border-color: var(--ev);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+.inputIcon {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.input input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--font-body);
+}
+
+.input input::placeholder {
+  color: var(--text-faint);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  flex: 1;
+  min-height: 0;
+  margin: 0 -6px;
+  padding: var(--space-10) 6px var(--space-12);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-disabled);
+  font-size: var(--font-body);
+}
+
+.swipe {
+  flex: none;
+  border-radius: var(--radius-field);
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.swipeLifted {
+  box-shadow: var(--card-shadow);
+}
+
+.row {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 37px;
+  padding: 9px 11px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-field);
+  background: var(--fill-3);
+  outline: none;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.row:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--ev);
+}
+
+.expanded {
+  border-color: var(--card-stroke);
+  background: var(--card);
+}
+
+.line {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.tray {
+  flex: none;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+  font-size: var(--font-body);
+  line-height: 17px;
+  overflow-wrap: anywhere;
+}
+
+.editor {
+  flex: 1;
+  min-width: 0;
+  height: 20px;
+  margin: -2px 0;
+  padding: 0 4px;
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-sm);
+  outline: none;
+  background: var(--fill-3);
+  color: var(--text);
+  font-size: var(--font-body);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 26px;
+  padding-left: 22px;
+}
+
+/* 定日期 · 变任务 (§6.3); 今天 and 删掉 are the swipe. */
+.action {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  height: 24px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--card);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.action:hover {
+  background: var(--fill-2);
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 1px;
+}
+
+.actionRm,
+.actionRm:hover {
+  border-color: transparent;
+  background: var(--rm-soft);
+  color: var(--rm-text);
+}
+
+.actionSt,
+.actionSt:hover {
+  border-color: transparent;
+  background: var(--st-soft);
+  color: var(--st-text);
+}

@@ -1,0 +1,1295 @@
+/* Task detail (ui-spec §10.2, V3-A/C 3-任务详情). Colours only through tokens. */
+
+.panel {
+  font-variant-numeric: tabular-nums;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-top: var(--space-18);
+}
+
+/* ── Head ─────────────────────────────────────────────────────────────────────────────────── */
+
+.titleButton,
+.titleText {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.titleButton {
+  cursor: text;
+}
+
+.titleButton:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.titleInput {
+  display: block;
+  box-sizing: border-box;
+  width: calc(100% + 16px);
+  /* The box grows outward so the text keeps its place. */
+  margin: -4px -8px;
+  padding: 4px 8px;
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-md);
+  background: var(--elevated);
+  box-shadow: 0 0 0 3px var(--event-glow);
+  color: var(--text);
+  caret-color: var(--ev);
+  font: inherit;
+  outline: none;
+  animation: titleEdit 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes titleEdit {
+  from {
+    border-color: transparent;
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titleInput {
+    animation: none;
+  }
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 28px;
+  padding: 0 var(--space-10);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.statusPill:focus-visible,
+.moreButton:focus-visible,
+.archiveButton:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.status_active,
+.status_done {
+  background: var(--st-soft);
+  color: var(--st-text);
+}
+
+.status_waiting {
+  background: var(--rm-soft);
+  color: var(--rm-text);
+}
+
+.status_upcoming {
+  background: var(--fill-2);
+  color: var(--text-3);
+}
+
+.status_overdue {
+  background: var(--du-soft);
+  color: var(--du-text);
+}
+
+.menuLabel {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 96px;
+}
+
+.menuCheck {
+  color: var(--st);
+}
+
+.archiveButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 28px;
+  padding: 0 var(--space-10);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  color: var(--text-2);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+}
+
+.archiveSolid {
+  background: var(--st);
+  color: var(--on-accent);
+}
+
+.moreButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-3);
+}
+
+.moreButton:hover {
+  background: var(--fill-2);
+}
+
+.archivedTag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-10);
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  color: var(--text-3);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+}
+
+.missing {
+  color: var(--text-muted);
+}
+
+/* ── Delete confirmation ──────────────────────────────────────────────────────────────────── */
+
+.deleteBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-bottom: var(--space-14);
+  padding: var(--space-14) var(--space-16);
+  border-radius: var(--radius-md);
+  background: var(--du-soft);
+}
+
+.deleteTitle {
+  color: var(--text);
+  font-size: var(--font-body);
+  font-weight: var(--weight-bold);
+}
+
+.deleteText {
+  color: var(--text-3);
+  font-size: var(--font-small);
+}
+
+.deleteFoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-8);
+}
+
+.dangerButton {
+  height: 30px;
+  padding: 0 var(--space-16);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--du);
+  color: var(--on-accent);
+  font-size: var(--font-body);
+  font-weight: var(--weight-semibold);
+}
+
+/* ── Time block ───────────────────────────────────────────────────────────────────────────── */
+
+.timeBlock {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  /* Hidden tips must never widen the panel (they still count for scroll overflow). */
+  overflow-x: clip;
+  padding: var(--space-14) var(--space-16);
+  border-radius: var(--radius-md);
+  background: var(--fill-3);
+}
+
+.row1 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-14);
+}
+
+.caption {
+  flex: none;
+  margin-right: var(--space-2);
+  color: var(--text-muted);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.chips {
+  display: inline-flex;
+  gap: var(--space-6);
+}
+
+.dateChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 26px;
+  padding: 0 var(--space-10);
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-pill);
+  background: var(--control);
+  box-shadow: var(--shadow-faint);
+}
+
+.dateChip:disabled {
+  cursor: default;
+}
+
+.dateChip:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.chipOn {
+  border-color: var(--st);
+}
+
+.chipEmpty {
+  border-style: dashed;
+  background: transparent;
+  box-shadow: none;
+}
+
+.chipInfinity {
+  color: var(--text-muted);
+}
+
+.dueWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.dueClear {
+  position: absolute;
+  top: -5px;
+  right: -4px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--text-2);
+  color: var(--on-accent);
+  cursor: pointer;
+}
+
+.dueWrap:hover .dueClear,
+.dueClear:focus-visible {
+  display: inline-flex;
+}
+
+/* 「→ 截止改到 10/9？ ×」: pops in after a step lands past the due date. */
+.nudge {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  margin-left: var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--du-soft);
+  color: var(--du-text);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+  animation: nudgeIn 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes nudgeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.8);
+  }
+}
+
+.nudgeYes,
+.nudgeNo {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nudgeYes {
+  gap: var(--space-4);
+  padding: 0 var(--space-4) 0 var(--space-10);
+}
+
+.nudgeNo {
+  padding: 0 var(--space-8) 0 var(--space-4);
+  opacity: 0.6;
+}
+
+.nudgeYes:hover {
+  text-decoration: underline;
+}
+
+.nudgeNo:hover {
+  opacity: 1;
+}
+
+.nudgeYes:focus-visible,
+.nudgeNo:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: -2px;
+  border-radius: var(--radius-pill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nudge {
+    animation: none;
+  }
+}
+
+.bellButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 26px;
+  padding: 0 var(--space-8);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-faint);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.bellButton:hover:not(:disabled) {
+  background: var(--control);
+  color: var(--text-2);
+}
+
+.bellButton:disabled {
+  cursor: default;
+}
+
+.bellButton:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.bellOn {
+  background: var(--rm-soft);
+  color: var(--rm);
+}
+
+.chipLabel {
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+}
+
+.chipValue {
+  color: var(--text);
+  font-size: var(--font-body);
+  font-weight: var(--weight-bold);
+}
+
+.chipOff .chipValue {
+  color: var(--text-muted);
+  font-weight: var(--weight-regular);
+}
+
+/* Due today or past (lib/taskMath dueUrgent): the date turns red; otherwise it reads like the
+   start date (ui-spec §10.1). */
+.chipDue {
+  color: var(--du-text);
+}
+
+.row2,
+.row3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+/* The day count (components/ui/DayCount, 26 high) on the left, the other sentence on the right,
+   on one baseline (ui-spec §10.2). */
+.row2 {
+  font-size: var(--font-small);
+}
+
+.row3 {
+  position: relative;
+  margin-top: var(--space-10);
+  font-size: var(--font-caption);
+}
+
+.dueLabelAt {
+  position: absolute;
+  right: calc(100% - var(--due-at) - 4px);
+}
+
+.track {
+  position: relative;
+  height: 4px;
+  margin: var(--space-12) 4px 0 0;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+}
+
+/* No due date: the track is open at the right, fading out. */
+.trackOpen {
+  background: linear-gradient(90deg, var(--line) 70%, transparent);
+}
+
+/* The fill sweeps in from the start when the panel opens (as on the card). */
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-pill);
+  transform-origin: left;
+  animation: sweep 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sweep {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none;
+  }
+}
+
+.fill_st {
+  background: var(--st);
+}
+
+.fill_rm {
+  background: var(--rm);
+}
+
+.fill_du {
+  background: var(--du);
+}
+
+.fill_done {
+  background: var(--task-done-bar);
+}
+
+.fill_none {
+  display: none;
+}
+
+/* A step marker on the track sits in a bigger hit area (.dotWrap): hover makes it swell with a
+   springy overshoot and pops a tip out of it. */
+.dotWrap {
+  position: absolute;
+  /* Above the today tick and the due dot: a marker near today covers the line, never the other
+     way round (lib/taskMath tickAt drops the tick when one sits right on today). */
+  z-index: 1;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  outline: none;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dotWrap:hover {
+  z-index: 2;
+}
+
+.dotMark {
+  display: grid;
+  border-radius: 50%;
+  /* The marker covers the line behind it. */
+  background: var(--fill-3);
+  transition: transform 0.34s var(--spring);
+}
+
+.dotWrap:hover .dotMark {
+  transform: scale(1.5);
+}
+
+.dotTip {
+  --tx: -50%;
+  position: absolute;
+  bottom: calc(100% - 1px);
+  left: 50%;
+  width: max-content;
+  max-width: 220px;
+  padding: var(--space-6) var(--space-10);
+  border-radius: var(--radius-row);
+  background: var(--text);
+  color: var(--elevated);
+  font-size: var(--font-caption);
+  line-height: 1.45;
+  white-space: pre-line;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(var(--tx), 6px) scale(0.55);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.1s ease-out,
+    transform 0.16s ease-in;
+}
+
+/* Near an end of the track the tip hangs inward from the marker instead of centring on it. */
+.dotWrap[data-edge="start"] .dotTip {
+  --tx: 0;
+  left: 0;
+  transform-origin: 10px 100%;
+}
+
+.dotWrap[data-edge="end"] .dotTip {
+  --tx: 0;
+  right: 0;
+  left: auto;
+  transform-origin: calc(100% - 10px) 100%;
+}
+
+.dotWrap:hover .dotTip {
+  opacity: 1;
+  transform: translate(var(--tx), 0) scale(1);
+  transition:
+    opacity 0.12s ease-out 0.03s,
+    transform 0.34s var(--spring) 0.03s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dotMark,
+  .dotTip,
+  .dotWrap:hover .dotTip {
+    transition-duration: 0.01s;
+    transition-delay: 0s;
+  }
+}
+
+/* How many markers merged into this one. */
+.dotCount {
+  position: absolute;
+  bottom: calc(100% - 2px);
+  left: 50%;
+  pointer-events: none;
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  transform: translateX(-50%);
+}
+
+.todayTick {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 12px;
+  border-radius: 1px;
+  background: var(--text);
+  transform: translate(-50%, -50%);
+}
+
+.dueDot {
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--du);
+  transform: translate(-50%, -50%);
+}
+
+/* Steps after the due date: the solid line stops at the due dot (--due-at), a dashed tail runs
+   on to the latest step. */
+.trackStretched {
+  background: linear-gradient(90deg, var(--line) var(--due-at), transparent var(--due-at));
+}
+
+.trackTail {
+  position: absolute;
+  inset: 0 0 0 auto;
+  background: repeating-linear-gradient(90deg, var(--line) 0 5px, transparent 5px 9px);
+}
+
+/* Derived label tones (types/domain TextTone). */
+.tone_text {
+  color: var(--text);
+}
+
+.tone_muted {
+  color: var(--text-muted);
+}
+
+.tone_subtle {
+  color: var(--text-3);
+}
+
+.tone_st {
+  color: var(--st-text);
+}
+
+.tone_du {
+  color: var(--du-text);
+}
+
+.tone_rm {
+  color: var(--rm-text);
+}
+
+.strong {
+  font-weight: var(--weight-semibold);
+}
+
+/* ── Key point head + timeline ────────────────────────────────────────────────────────────── */
+
+.kpHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  flex: none;
+  margin: 22px 0 var(--space-10);
+}
+
+.kpTitle {
+  flex: none;
+  color: var(--text);
+  font-size: var(--font-input);
+  font-weight: var(--weight-bold);
+  white-space: nowrap;
+}
+
+.kpCount {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}
+
+.timelineScroll {
+  flex: 0 1 auto;
+  max-height: max(168px, calc(100vh - 510px));
+}
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Opaque row colour under the swipe surface (SwipeRow). */
+  --swipe-surface: var(--modal);
+}
+
+/* The <li> is the drag source (§10.14); the row itself is the SwipeRow surface (.entryGrid).
+   One line per row since 2026-10-02 (was 56 high with the type label above the text): 40 high,
+   text and type chip side by side, the text wraps under itself. */
+.entry {
+  position: relative;
+  border-radius: var(--radius-field);
+}
+
+.entryDraggable {
+  cursor: grab;
+}
+
+.entrySwipe {
+  /* 「完成」 / 「删除」 slide in over the row's ends as rounded strips (SwipeRow overlay). */
+  --swipe-overlay-radius: var(--radius-field);
+  border-radius: var(--radius-field);
+}
+
+.entryGrid {
+  display: grid;
+  grid-template-columns: 52px 24px 1fr;
+  align-items: start;
+  min-height: 40px;
+}
+
+/* Drag, like a calendar item (§2.7): a lifted copy follows the pointer (--elevated, --shadow-pop,
+   a slight tilt; −1° rather than −2°: the row is 10× as wide) and 「放到这里」 marks where it lands.
+   The list keeps its height: the held row is the slot while in place and closes once moved (the
+   slot then shows up where it would land). */
+.heldAway {
+  display: none;
+}
+
+.liftedLayer {
+  pointer-events: none;
+}
+
+.entryLifted {
+  border-radius: var(--radius-field);
+  background-color: var(--elevated);
+  background-image: linear-gradient(var(--swipe-tint, transparent), var(--swipe-tint, transparent));
+  box-shadow: var(--shadow-pop);
+  transform: rotate(-1deg);
+}
+
+.dropSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-field);
+  background: var(--ev-soft);
+  color: var(--ev-text);
+  font-size: var(--font-caption);
+}
+
+/* Grabbing everywhere while a row is held (html + attribute outranks the row cursors). */
+:global(html[data-step-cursor="grabbing"]),
+:global(html[data-step-cursor="grabbing"] *) {
+  cursor: grabbing;
+}
+
+/* Opened from a card row (§10.8): a soft tint over the row that fades out. Drawn inside the row
+   (the old 2px outer ring was clipped by the scroll area and covered by the next row). */
+.flash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ev-soft);
+  pointer-events: none;
+  opacity: 0;
+  animation: flash 1.6s var(--ease-out);
+}
+
+@keyframes flash {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Date column (§10.2): the row's own date only. Read-only rows show it as text; elsewhere the
+   cell is the date control: the date (or, undated, a faint 设日期 on row hover / focus) on a
+   button that opens the picker. Centred on the first text line (20 from the top). */
+.entryDate {
+  padding: 12px 0 0 var(--space-8);
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}
+
+.dateCell {
+  display: flex;
+  min-width: 0;
+  padding: var(--space-8) 0 0 var(--space-4);
+}
+
+.dateButton {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.dateButton:hover,
+.dateButtonOpen {
+  background: var(--fill-2);
+}
+
+.dateButton:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 1px;
+}
+
+.datePlaceholder {
+  color: var(--text-faint);
+  font-size: var(--font-caption);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.dateButtonOpen .datePlaceholder {
+  opacity: 1;
+}
+
+.entry:hover .datePlaceholder,
+.dateButton:focus-visible .datePlaceholder {
+  opacity: 1;
+}
+
+.timelineDragging .entry .datePlaceholder {
+  opacity: 0;
+}
+
+/* Overdue row (ui-spec §9.3): the date in the red of 逾期. */
+.entryDateLate {
+  color: var(--du-text);
+  font-weight: var(--weight-semibold);
+}
+
+.rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  padding-top: 12px;
+}
+
+.rail::before,
+.rail::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--line);
+}
+
+/* The rail stops at the marker (12px from the top, 16px tall) so hollow markers stay clean. */
+.rail::before {
+  top: 0;
+  height: 10px;
+}
+
+.rail::after {
+  top: 30px;
+  bottom: 0;
+}
+
+.railFirst::before,
+.railLast::after {
+  display: none;
+}
+
+.entryBody {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  min-width: 0;
+  padding: var(--space-10);
+}
+
+/* Type chip at the row's end (§10.2, 2026-10-02), on the first text line. Quiet chips (我来做,
+   done rows) keep their place and show on row hover / focus or while their menu is open. */
+.kindSlot {
+  flex: none;
+}
+
+.kindLabel {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 18px;
+  margin-top: 1px;
+  padding: 0 var(--space-6);
+  border: 0;
+  border-radius: 5px;
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+button.kindLabel {
+  cursor: pointer;
+}
+
+button.kindLabel:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 1px;
+}
+
+.kindQuiet {
+  opacity: 0;
+}
+
+.entry:hover .kindQuiet,
+.kindQuiet:focus-visible,
+.kindOpen {
+  opacity: 1;
+}
+
+.timelineDragging .entry .kindQuiet {
+  opacity: 0;
+}
+
+.label_neutral {
+  background: var(--fill-2);
+  color: var(--text-3);
+}
+
+.label_rm {
+  background: var(--rm-soft);
+  color: var(--rm-text);
+}
+
+/* Open steps dark, done ones grey (2026-10-02: no 「current」 row; done used to keep --text-2). */
+.entryText {
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+  font-size: var(--font-body);
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.entryTextDone {
+  color: var(--text-muted);
+}
+
+/* 「逾期 N 天」 at the end of an overdue row (ui-spec §9.3), after its quiet type chip, in --du. */
+.lateLabel {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 18px;
+  margin-top: 1px;
+  padding: 0 var(--space-6);
+  border-radius: 5px;
+  background: var(--du-soft);
+  color: var(--du-text);
+  font-size: var(--font-caption);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.inlineInput {
+  width: 100%;
+  height: 26px;
+  margin: -3px 0;
+  padding: 0 var(--space-6);
+  border: 1px solid var(--ev);
+  border-radius: var(--radius-sm);
+  background: var(--elevated);
+  box-shadow: 0 0 0 3px var(--event-glow);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--font-body);
+  outline: none;
+}
+
+.clearDate {
+  margin-top: var(--space-6);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ev-text);
+  font-size: var(--font-small);
+}
+
+.summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
+  padding: var(--space-10) var(--space-12);
+  border-radius: var(--radius-field);
+  background: var(--fill-3);
+  color: var(--text);
+  font-size: var(--font-body);
+}
+
+.summaryIcon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--rm);
+}
+
+.emptyTimeline {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-16) 0;
+  color: var(--text-disabled);
+}
+
+.divider {
+  flex: none;
+  height: 1px;
+  margin-top: var(--space-6);
+  background: var(--line);
+}
+
+/* ── AddBar ───────────────────────────────────────────────────────────────────────────────── */
+
+/* The pills keep to the first line when the text box grows a preview line. */
+.addBar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  flex: none;
+  margin-top: var(--space-14);
+}
+
+.addInputWrap {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 var(--space-14);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: var(--fill-3);
+}
+
+/* With the preview line the pill grows down; its corners keep the 34-high pill's curve. */
+.addInputWrapPreview {
+  border-radius: 17px;
+}
+
+.addInputLine {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 32px;
+}
+
+/* Under the typed text, lined up with it (past the 13px plus and the 8 gap). */
+.addPreview {
+  margin: -5px 0 0 21px;
+  padding-bottom: var(--space-8);
+}
+
+.addInputWrap:focus-within {
+  border-color: var(--ev);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+.addPlus {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.addInput {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--font-small);
+  outline: none;
+}
+
+/* Round 「add」 button at the end of the text box: springs in once there is text. */
+.addSubmit {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: calc(var(--space-6) * -1);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ev);
+  color: var(--on-accent);
+  cursor: pointer;
+  animation: addSubmitIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.12s;
+}
+
+.addSubmit:hover {
+  transform: scale(1.08);
+}
+
+.addSubmit:active {
+  transform: scale(0.92);
+}
+
+.addSubmit:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+@keyframes addSubmitIn {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .addSubmit {
+    animation: none;
+  }
+}
+
+.addInput::placeholder {
+  color: var(--text-faint);
+}
+
+.addPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 34px;
+  padding: 0 var(--space-12);
+  border: 1px solid var(--card-stroke);
+  border-radius: var(--radius-pill);
+  background: var(--control);
+  color: var(--text-2);
+  font-size: var(--font-body);
+  white-space: nowrap;
+}
+
+.addPill:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 2px;
+}
+
+.kindPill {
+  gap: var(--space-4);
+  padding: 0 var(--space-10);
+}
+
+.kindPill_wait svg:first-child,
+.kindPill_check svg:first-child {
+  color: var(--rm);
+}
+
+.kindPill_do svg:first-child {
+  color: var(--st);
+}
+
+.kindPill_note svg:first-child {
+  color: var(--text-muted);
+}
+
+.caret {
+  color: var(--text-muted);
+}
+
+.dateWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.datePill {
+  min-width: 34px;
+  justify-content: center;
+  padding: 0 var(--space-10);
+  font-weight: var(--weight-semibold);
+}
+
+.faint {
+  color: var(--text-faint);
+  font-weight: var(--weight-regular);
+}
+
+.dateClear {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--text-muted);
+  color: var(--on-accent);
+}
+
+.dateWrap:hover .dateClear,
+.dateClear:focus-visible {
+  display: inline-flex;
+}
+
+.restoreRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-14);
+}
+
+/* ── History ──────────────────────────────────────────────────────────────────────────────── */
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding-top: var(--space-14);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ev-text);
+  font-size: var(--font-body);
+}
+
+.historyEmpty {
+  color: var(--text-muted);
+  font-size: var(--font-body);
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.historyRow {
+  display: flex;
+  gap: var(--space-10);
+  font-size: var(--font-small);
+  line-height: 18px;
+}
+
+.historyTime {
+  flex: none;
+  width: 76px;
+  color: var(--text-muted);
+}
+
+.historyText {
+  color: var(--text-2);
+  overflow-wrap: anywhere;
+}

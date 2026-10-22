@@ -1,0 +1,150 @@
+/* Date picker (ui-spec §12.1): 280 wide, --elevated material, no scrim. */
+.popover {
+  padding: 0;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--popover-pad) var(--space-16);
+  outline: none;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  color: var(--text);
+  font-size: var(--font-input);
+  font-weight: var(--weight-semibold);
+}
+
+.bell {
+  color: var(--rm);
+}
+
+/* One row in zh-Hans; longer labels (English 「Tomorrow」「Next Mon」) wrap to a second row instead
+   of running past the 248px content width. */
+.quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.chip {
+  height: 25px;
+  padding: 0 var(--space-12);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--fill-2);
+  color: var(--text-2);
+  font-size: var(--font-body);
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.chip:hover {
+  background: var(--track);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--ev);
+  outline-offset: 1px;
+}
+
+.chipOn,
+.chipOn:hover {
+  background: var(--rm-soft);
+  color: var(--rm-text);
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 32px;
+  padding: 0 var(--space-10);
+  border-radius: 12px;
+  background: var(--fill-3);
+}
+
+.timeLabel {
+  flex: 1;
+  color: var(--text-2);
+  font-size: var(--font-body);
+}
+
+.timeOff {
+  color: var(--text-muted);
+  font-size: var(--font-body);
+}
+
+.timeInput {
+  width: 64px;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  outline: none;
+  background: var(--control);
+  color: var(--text);
+  font-size: var(--font-body);
+  text-align: center;
+}
+
+.timeInput:focus {
+  border-color: var(--ev);
+  box-shadow: 0 0 0 3px var(--event-glow);
+}
+
+.timeInput::placeholder {
+  color: var(--text-faint);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+/* Usually one line; a long summary (a time set in the inbox, English 「· To-dos + calendar」) wraps
+   to a second line (2 × 15 = the 30px 「确定」 button) and only then ends in an ellipsis. */
+.summary {
+  display: -webkit-box;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--rm-text);
+  font-size: var(--font-small);
+  font-weight: var(--weight-semibold);
+  line-height: 15px;
+  text-wrap: balance;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.summaryEmpty {
+  color: var(--text-faint);
+  font-weight: var(--weight-regular);
+}
+
+.none {
+  padding: 0 3px;
+}
+
+.ok {
+  height: 30px;
+  padding: 0 var(--space-12);
+}
+
+/* Holds the calendar so useAttention's ring has an edge to draw on (OK with no day picked). */
+.calendarWrap {
+  margin: calc(var(--space-4) * -1);
+  padding: var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  outline: none;
+}

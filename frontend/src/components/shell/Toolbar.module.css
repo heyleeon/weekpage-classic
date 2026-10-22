@@ -1,0 +1,43 @@
+/* Toolbar (ui-spec §1.3): h 36, margins top 19 / right 20 / left 24; empty space drags the window. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: var(--toolbar-h);
+  margin: var(--toolbar-margin-top) var(--toolbar-margin-right) 0 var(--toolbar-margin-left);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--toolbar-gap);
+  height: 100%;
+}
+
+/* Gear (§1.3): a round glass button as tall as the capsules, same material as 「归档 N」.
+   The fill and stroke are repeated under .right so they beat IconButton's own .plain rules
+   whatever the stylesheet order. */
+.gear {
+  composes: glass from "../ui/Glass.module.css";
+}
+
+.right .gear,
+.right .gear:hover:not(:disabled) {
+  border: var(--glass-stroke);
+  background: var(--glass-fill);
+  color: var(--text-2);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+:global(.no-vibrancy) .right .gear {
+  background: var(--capsule-solid);
+}
+
+.right .gear:hover:not(:disabled) {
+  color: var(--text);
+}
+
+:global(.no-vibrancy) .right .gear:hover:not(:disabled) {
+  background: var(--capsule-solid);
+}

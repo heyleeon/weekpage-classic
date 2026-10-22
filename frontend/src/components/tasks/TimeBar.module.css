@@ -1,0 +1,86 @@
+/* Time bar (ui-spec §8.2, §8.4), 14 below the title row: a 22-high line — the day count
+   (components/ui/DayCount) on the left, the date range (11) on the right, on one baseline — then
+   the 4-high track, 8 below, across the full width. */
+.block {
+  margin-top: var(--space-14);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  height: 22px;
+}
+
+/* The range gives way first when the card is narrow; the headline never does. */
+.range {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  min-width: 0;
+  margin-left: auto;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: var(--font-caption);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dash {
+  color: var(--text-faint);
+}
+
+.infinity {
+  align-self: center;
+}
+
+.track {
+  position: relative;
+  height: 4px;
+  margin-top: var(--space-8);
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  overflow: hidden;
+}
+
+/* No due date: the track runs open towards ∞, fading out (as in the detail). */
+.trackOpen {
+  background: linear-gradient(90deg, var(--line) 60%, transparent);
+}
+
+/* The fill sweeps in from the start when the board appears. */
+.fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  transform-origin: left;
+  transition: width var(--duration-card) var(--ease-out);
+  animation: sweep 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sweep {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none;
+  }
+}
+
+.fill_st {
+  background: var(--st);
+}
+
+.fill_rm {
+  background: var(--rm);
+}
+
+.fill_du {
+  background: var(--du);
+}
+
+.fill_done {
+  background: var(--task-done-bar);
+}
