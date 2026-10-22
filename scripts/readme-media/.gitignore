@@ -1,0 +1,9 @@
+node_modules/
+vid/
+frames/
+out/
+sheets/
+results.json
+*.png
+winbounds
+warp
