@@ -19,6 +19,7 @@ WeekPage 是一个 local-first desktop tool（日历 + 待办 + 收件箱 + 任�
 - `docs/ui-spec.md` — 界面实现规格（开发以它为准）
 - `docs/roadmap.md` — 1.0 冻结时没做完的切片，不再排期（含 Windows / macOS 人工验证清单）
 - `docs/memory/` — 长期记忆（见文末协议）
+- `docs/media/` — README 用的截图和 GIF，由 `scripts/readme-media/` 生成，改了界面重跑
 
 `architecture` 和 `ui-spec` 是定稿规格：实现与它们不一致时，要么改代码，要么同一次提交里改文档并在 `docs/memory/decisions.md` 记原因。
 
@@ -35,7 +36,7 @@ backend/    = Tauri 的 src-tauri/，单 crate weekpage（lib weekpage + bin wee
   src/db/                 唯一写路径：journal（撤销）、history、sort_key、snapshot、settings + 各仓储
   src/platform/           唯一允许 cfg(target_os) 的地方
   src/i18n.rs             托盘菜单 / 通知的中英文字（Lang、resolve、Text）
-scripts/    check.sh · gen-contracts.sh · check-boundaries.sh · check-no-cjk.py · check-ui-copy.py · sync-agent-config.sh
+scripts/    check.sh · gen-contracts.sh · check-boundaries.sh · check-no-cjk.py · check-ui-copy.py · sync-agent-config.sh · readme-media/（README 截图与 GIF）
 ```
 
 ## 改共享契约时
