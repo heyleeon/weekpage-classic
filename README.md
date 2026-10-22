@@ -15,7 +15,8 @@
 
 ## 下载
 
-还没有发布安装包，先按下面的步骤从源码构建。
+- **macOS 13+**（Apple 芯片和 Intel 通用）：到 [Releases](https://github.com/heyleeon/weekpage-classic/releases/latest) 下载 `WeekPage_<版本>_universal.dmg`，已签名并经 Apple 公证，打开后把 WeekPage 拖进「应用程序」。
+- **Windows**：还没有安装包，请按下面的步骤从源码构建。
 
 ## 隐私
 
@@ -60,6 +61,7 @@ WEEKPAGE_SEED=demo WEEKPAGE_FAKE_NOW=2026-09-30T10:00 pnpm -C frontend tauri:dev
 | `bash scripts/gen-contracts.sh` | 改了 Rust 类型 / 命令 / seed 后，重新生成 `frontend/src/types/bindings.ts` 与 demo 快照 |
 | `pnpm -C frontend tauri:build:debug` | debug 包：`backend/target/debug/bundle/macos/WeekPage Dev.app` |
 | `pnpm -C frontend tauri:release` | 正式包（正式身份，ad-hoc 签名）：`backend/target/release/bundle/macos/WeekPage.app` + `dmg/` |
+| `bash scripts/release.sh --publishable` | 发版用的 DMG：universal、Developer ID 签名、公证（凭据的写法见脚本开头） |
 | `WEEKPAGE_DEBUG_SMOKE=1 WEEKPAGE_DATA_DIR=$(mktemp -d) backend/target/debug/weekpage` | 冒烟：显示 → 隐藏 → 显示 → 发一条通知 → 退出码 0 |
 
 ### 开发身份与正式身份
@@ -132,6 +134,7 @@ scripts/    质量门与生成脚本
 
 - The UI is in Simplified Chinese and English. The calendar shows mainland China's public holidays and solar terms.
 - **Privacy**: the only network request is a weekly download of holiday data from jsDelivr. If it fails, the app uses the copy bundled with it.
+- **Download**: macOS 13+ (Apple silicon and Intel) — get `WeekPage_<version>_universal.dmg` from [Releases](https://github.com/heyleeon/weekpage-classic/releases/latest). It is signed and notarized by Apple. There is no Windows installer yet.
 - **Build from source**: install Node 24, pnpm 10 and rustup, then run `pnpm -C frontend install` and `pnpm -C frontend tauri:dev`. The steps above in Chinese list all commands.
 - **Forks**: change `identifier` in `backend/tauri.conf.json` and `backend/tauri.release.conf.json`, and use your own name and icon. If you keep the same identifier, your build and the official app share one data folder.
 - **Contributing**: bug reports and bug-fix PRs are welcome. Run `bash scripts/check.sh` before you open a PR. New features are not accepted.
